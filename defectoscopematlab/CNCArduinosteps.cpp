@@ -341,7 +341,7 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf)
 	//Timer1.setPeriod(speedXf);
 //	Timer1.start();
 
-}
+//}
 //void CNCArduinostepsClass::FreqStepsY(long stepsYf, long speedYf)
 //{
 //	Yarrived = false;
@@ -393,16 +393,16 @@ void CNCArduinostepsClass::GotoZero()
 }
 void CNCArduinostepsClass::StepXintr()
 {
-	if (timer1steps > timer1stepsfull || Xinterptconc)
-	{
-		Timer1.stop();
-		timer1stepsinter = timer1steps;
-		timer1steps = 1;
-		ArrivedX();
+//	if (timer1steps > timer1stepsfull || Xinterptconc)
+//	{
+//		Timer1.stop();
+//		timer1stepsinter = timer1steps;
+//		timer1steps = 1;
+//		ArrivedX();
 
-		Xinterptconc = false;
+//		Xinterptconc = false;
 		
-	}
+//	}
 	//if (timer1freqspeedup > timer1freq)
 	//{
 	//	timer1freqspeedup = timer1freqspeedup - timer1freqspeedupcoef;
@@ -414,21 +414,21 @@ void CNCArduinostepsClass::StepXintr()
 	//}
 	
 	//Serial.println(timer1steps);
-	digitalWrite(13, digitalRead(13) ^ 1);
-	timer1steps++;
+	//digitalWrite(13, digitalRead(13) ^ 1);
+	//timer1steps++;
 }
 void CNCArduinostepsClass::StepYintr()
 {
 //	Serial.println(timer3stepsfull);
-	if (timer3steps > timer3stepsfull || Yinterptconc)
-	{
-		Timer3.stop();
-		timer3stepsinter = timer3steps;
-		timer3steps = 1;
-		ArrivedY();
-		Yinterptconc = false;
+	//if (timer3steps > timer3stepsfull || Yinterptconc)
+	//{
+	///	Timer3.stop();
+	//	timer3stepsinter = timer3steps;
+	//	timer3steps = 1;
+	//	ArrivedY();
+	//	Yinterptconc = false;
 
-	}
+//	}
 	//if (timer1freqspeedup > timer1freq)
 	//{
 	//	timer1freqspeedup = timer1freqspeedup - timer1freqspeedupcoef;
@@ -440,8 +440,8 @@ void CNCArduinostepsClass::StepYintr()
 	//}
 
 	//Serial.println(timer3steps);
-	digitalWrite(2, digitalRead(2) ^ 1);
-	timer3steps++;
+//	digitalWrite(2, digitalRead(2) ^ 1);
+//	timer3steps++;
 }
 void CNCArduinostepsClass::setpins(byte dirx, byte diry, byte xsteppin, byte ysteppin, byte enablepin)
 {
