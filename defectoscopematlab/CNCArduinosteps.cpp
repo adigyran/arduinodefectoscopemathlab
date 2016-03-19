@@ -326,6 +326,16 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	//Serial.println(j);
 	return iy;
 }
+void CNCArduinostepsClass::SetDirX(byte dirx)
+{
+	digitalWrite(DirpinX, dirx);
+	DirX = dirx;
+}
+void CNCArduinostepsClass::SetDirY(byte diry)
+{
+	digitalWrite(DirpinY, diry);
+	DirY = diry;
+}
 void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 {
 	if (calibset && pinsset)
@@ -337,6 +347,34 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 
 		long coordXsteps = abs(Xmm / calibrationX);
 		long coordYsteps = abs(Ymm / calibrationY);
+		if (newcurcord.currentXs < coordXsteps)
+		{
+			SetDirX(0);
+			// 20      40                 
+			newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
+			Serial.println(newcurcord.currentXs);
+			
+		}
+		else if (newcurcord.currentXs > coordXsteps)
+		{
+
+		}
+		else if (newcurcord.currentXs = coordXsteps)
+		{
+
+		}
+		if (newcurcord.currentYs < coordYsteps)
+		{
+
+		}
+		else if (newcurcord.currentYs > coordYsteps)
+		{
+
+		}
+		else if (newcurcord.currentYs = coordYsteps)
+		{
+
+		}
 
 
 	}
@@ -638,9 +676,19 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 
 CNCArduinostepsClass::currencoord CNCArduinostepsClass::getcurrencoord()
 {
-	newcurcord.currentXs = currentX;
-	newcurcord.currentYs = currentY;
-	return newcurcord;
+	currencoord tempcurcords;
+	tempcurcords.currentXs = newcurcord.currentXs;
+	tempcurcords.currentYs = newcurcord.currentYs;
+	return tempcurcords;
+}
+
+CNCArduinostepsClass::currencoordunits CNCArduinostepsClass::getcurrentcoordunits()
+{
+	currencoordunits tempcurcords;
+	tempcurcords.currentXunits = newcurcordunits.currentXunits;
+	tempcurcords.currentYunits = newcurcordunits.currentYunits;
+
+	return currencoordunits();
 }
 
 void CNCArduinostepsClass::Yinterpt(bool yplus)

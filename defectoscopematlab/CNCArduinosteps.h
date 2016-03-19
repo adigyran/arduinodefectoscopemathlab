@@ -22,7 +22,11 @@ public:
 		long currentXs;
 		long currentYs;
 	};
-	
+	struct currencoordunits
+	{
+		double currentXunits;
+		double currentYunits;
+	};
 	void init();
 	void setpins(byte dirx, byte diry, byte xsteppin, byte ysteppin, byte enablepin);
 	void setdxdy(double dxXunits, double dxYunits);
@@ -30,6 +34,7 @@ public:
 	void serialhandler(String command, long amount,String amountstri);
 	
 	currencoord getcurrencoord();
+	currencoordunits getcurrentcoordunits();
 	
 	static  void Yinterpt(bool yplus); //переменная определяет какой из концевиков сработал, в отрицательном либо положительном направлении
 	static  void Xinterpt(bool xplus);
@@ -54,14 +59,18 @@ private:
 	 bool Xarrivd, Yarrivd;
 	 void serialcalibratedx(String calibrcommand);
 	 void calibrate();
+	
 	static  volatile long timer1steps, timer3steps,timer1stepsinter,timer3stepsinter;
 	static  volatile long timer1stepsfull, timer3stepsfull;
 	 static volatile long timer1freq, timer3freq;
+	 void SetDirX(byte dirx);
+		 void SetDirY(byte diry);
 	 static volatile long timer1freqspeedup, timer3freqspeedup;
 	 static volatile long timer1freqspeedupcoef, timer3freqspeedupcoef;
 	 static volatile bool Xinterptconc, Yinterptconc,Xarrived,Yarrived,Xinterptconc2,Yinterptconc2;
 	 static void ArrivedX();
 	 static void ArrivedY();
+	 
 	// static void Yintert();
 	// static void Xintert();
 	 long desirX, desirdY; // where is next stop
@@ -81,6 +90,7 @@ private:
 	 void StepY(long speedY);
 	 void Arrivedtostop();
 	 currencoord newcurcord;
+	 currencoordunits newcurcordunits;
 
 
 
