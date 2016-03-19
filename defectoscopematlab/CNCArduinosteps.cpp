@@ -691,7 +691,13 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		//FreqStepsX(timer1stepsfull, timer1freq);
 	long totalxsteps = StepsX(timer1stepsfull, timer1freq,DirX);
 	}
-
+	else if (command.equals("GTC"))
+	{
+		double gotoXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
+		double gotoYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		GotoCoord(gotoXmm, gotoYmm);
+		
+	}
 	else if (command.equals("YTF"))
 	{
 		timer3freq = amount;
