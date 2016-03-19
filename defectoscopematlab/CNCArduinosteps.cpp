@@ -324,41 +324,41 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf)
 	maxY = i;
 	//Serial.println(j);
 }
-void CNCArduinostepsClass::FreqStepsX(long stepsXf, long speedXf)
-{
-	timer1freqspeedup = speedXf * 10;
-	timer1freq = speedXf;
-	timer1stepsfull = stepsXf;
-	Timer1.initialize(speedXf);
-	Xarrived = false;
-	timer1freqspeedupcoef = speedXf / 100;
-	Serial.println(stepsXf);
-	Serial.println(speedXf);
-	timer1stepsinter = 0;
-	digitalWrite(13, LOW);
-	Timer1.attachInterrupt(StepXintr);
-	Yinterptconc = false;
+//void CNCArduinostepsClass::FreqStepsX(long stepsXf, long speedXf)
+//{
+//	timer1freqspeedup = speedXf * 10;
+//	timer1freq = speedXf;
+//	timer1stepsfull = stepsXf;
+//	Timer1.initialize(speedXf);
+//	Xarrived = false;
+//	timer1freqspeedupcoef = speedXf / 100;
+//	Serial.println(stepsXf);
+//	Serial.println(speedXf);
+//	timer1stepsinter = 0;
+//	digitalWrite(13, LOW);
+//	Timer1.attachInterrupt(StepXintr);
+//	Yinterptconc = false;
 	//Timer1.setPeriod(speedXf);
-	Timer1.start();
+//	Timer1.start();
 
 }
-void CNCArduinostepsClass::FreqStepsY(long stepsYf, long speedYf)
-{
-	Yarrived = false;
-	timer3freqspeedup = speedYf * 10;
-	timer3freq = speedYf;
-	digitalWrite(5, LOW);
-	timer3stepsfull = stepsYf;
-	Timer3.initialize(speedYf);
-	timer3freqspeedupcoef = speedYf / 100;
-	Serial.println(stepsYf);
-	Serial.println(speedYf);
-	timer3stepsinter = 0;
-	Timer3.attachInterrupt(StepYintr);
-	Yinterptconc = false;
-	//Timer1.setPeriod(speedXf);
-	Timer3.start();
-}
+//void CNCArduinostepsClass::FreqStepsY(long stepsYf, long speedYf)
+//{
+//	Yarrived = false;
+//	timer3freqspeedup = speedYf * 10;
+//	timer3freq = speedYf;
+//	digitalWrite(5, LOW);
+//	timer3stepsfull = stepsYf;
+//	Timer3.initialize(speedYf);
+//	timer3freqspeedupcoef = speedYf / 100;
+//	Serial.println(stepsYf);
+//	Serial.println(speedYf);
+//	timer3stepsinter = 0;
+//	Timer3.attachInterrupt(StepYintr);
+//	Yinterptconc = false;
+//	//Timer1.setPeriod(speedXf);
+//	Timer3.start();
+//}
 void CNCArduinostepsClass::GotoZero()
 {
 	if (pinsset) {
