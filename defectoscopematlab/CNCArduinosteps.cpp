@@ -326,6 +326,15 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	//Serial.println(j);
 	return iy;
 }
+void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currencoordunits &outputcurcorunits)
+{
+	if (calibset)
+	{
+		outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
+		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
+	}
+	else { calibrate(); }
+}
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
 	digitalWrite(DirpinX, dirx);
@@ -353,6 +362,10 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			// 20      40                 
 			newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
 			Serial.println(newcurcord.currentXs);
+			Serial.println(" steps");
+			calculatecurcorunits(newcurcord, newcurcordunits);
+			Serial.print(newcurcordunits.currentXunits);
+			Serial.println(" mm");
 			
 		}
 		else if (newcurcord.currentXs > coordXsteps)
