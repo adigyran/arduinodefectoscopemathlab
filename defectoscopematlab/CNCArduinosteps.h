@@ -68,8 +68,9 @@ private:
 	 byte Xpin, Ypin;
 	 bool pinsset,calibset,dxdyset,zeroset;
 	 byte DirpinX, DirpinY, Enablepin;
-	 void StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
-	 void StepsY(long stepsYf, long speedYf, byte directy);
+	 long StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
+	 long StepsY(long stepsYf, long speedYf, byte directy);
+
 	 void GotoCoord(double Xmm, double Ymm);
 	// void FreqStepsX(long stepsXf, long speedXf);
 	// void FreqStepsY(long stepsYf, long speedYf);

@@ -178,7 +178,7 @@ void CNCArduinostepsClass::calibrate()
 		digitalWrite(DirpinX, DirX);
 		
 		maxX = 0;
-		StepsX(100000, 1000,DirX);
+	 long totalxsteps =StepsX(100000, 1000,DirX);
 		totalstepsclbx = maxX + totalstepsclbx;
 		Serial.println(totalstepsclbx);
 		Serial.println(maxX);
@@ -204,7 +204,7 @@ void CNCArduinostepsClass::calibrate()
 		digitalWrite(DirpinY, DirY);
 
 		maxY = 0;
-		StepsY(100000, 1000,DirY);
+	long totalysteps = StepsY(100000, 1000,DirY);
 		totalstepsclby = maxY + totalstepsclby;
 		Serial.println(totalstepsclby);
 		Serial.println(maxY);
@@ -253,7 +253,7 @@ void CNCArduinostepsClass::ArrivedY()
 //{
 //}
 
-void CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
+long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 {
 	if (DirX == 0) {
 		Xinterptconc = false;
@@ -263,8 +263,8 @@ void CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	}
 	Serial.println("Dir");
 	Serial.println(DirX);
-	long i = 0;
-	for (i;i < stepsXf; i++)
+	long ix = 0;
+	for (ix;ix < stepsXf; ix++)
 	{
 		if ((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0)))
 		//if(!Xinterptconc&&!Xinterptconc2)
@@ -281,10 +281,11 @@ void CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 		}
 		else break;
 	}
-	Serial.println(i);
-	maxX = i;
+	Serial.println(ix);
+	return ix;
+	maxX = ix;
 }
-void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
+long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 {
 	if (DirX == 0) {
 		Xinterptconc = false;
@@ -293,9 +294,9 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		Xinterptconc2 = false;
 	}
 	//Xinterptconc = false;
-	long i = 0;
+	long iy = 0;
 	//long j = 0;
-	for (i;i < stepsYf; i++)
+	for (iy;iy < stepsYf; iy++)
 	{
 		if ((!Yinterptconc && DirY ==0)|| (!Yinterptconc2 && DirY == 1)) {
 			//if (pulseXelapsed > 100000) {
@@ -320,9 +321,10 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		}
 		else break;
 	}
-	Serial.println(i);
-	maxY = i;
+	Serial.println(iy);
+	maxY = iy;
 	//Serial.println(j);
+	return iy;
 }
 void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 {
@@ -401,11 +403,11 @@ void CNCArduinostepsClass::GotoZero()
 		Serial.println(digitalRead(18));
 		if (digitalRead(18) == HIGH)
 		{
-			StepsX(1000000, 1000,1);
+		long totalxsteps = StepsX(1000000, 1000,1);
 		}
 		if (digitalRead(21) == HIGH)
 		{
-			StepsY(1000000, 1000,0);
+		long totalysteps = StepsY(1000000, 1000,0);
 		}
 		newcurcord.currentXs = 0;
 		newcurcord.currentYs = 0;
@@ -594,7 +596,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		testingenableX = amount;
 		if (testingenableX)
 		{
-			StepsX(testingstepsX, testingfreqX,DirX);
+		long totalxsteps = StepsX(testingstepsX, testingfreqX,DirX);
 			digitalWrite(4, HIGH);
 			digitalWrite(10, HIGH);
 		}
@@ -611,7 +613,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	{
 		Xinterptconc = false;
 		//FreqStepsX(timer1stepsfull, timer1freq);
-		StepsX(timer1stepsfull, timer1freq,DirX);
+	long totalxsteps = StepsX(timer1stepsfull, timer1freq,DirX);
 	}
 
 	else if (command.equals("YTF"))
@@ -626,7 +628,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	{
 		Yinterptconc = false;
 		//FreqStepsY(timer3stepsfull, timer3freq);
-		StepsY(timer3stepsfull, timer3freq,DirY);
+	long totalysteps = StepsY(timer3stepsfull, timer3freq,DirY);
 	}
 	else
 	{
