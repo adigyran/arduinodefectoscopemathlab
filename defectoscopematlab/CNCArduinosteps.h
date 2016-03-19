@@ -66,12 +66,13 @@ private:
 	// static void Xintert();
 	 long desirX, desirdY; // where is next stop
 	 byte Xpin, Ypin;
-	 bool pinsset,calibset,dxdyset;
+	 bool pinsset,calibset,dxdyset,zeroset;
 	 byte DirpinX, DirpinY, Enablepin;
 	 void StepsX(long stepsXf,long speedXf); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
 	 void StepsY(long stepsYf, long speedYf);
-	 void FreqStepsX(long stepsXf, long speedXf);
-	 void FreqStepsY(long stepsYf, long speedYf);
+	 void GotoCoord(double Xmm, double Ymm);
+	// void FreqStepsX(long stepsXf, long speedXf);
+	// void FreqStepsY(long stepsYf, long speedYf);
 	 void GotoZero();
 	 static void StepXintr();
 	 static void StepYintr();

@@ -324,6 +324,24 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf)
 	maxY = i;
 	//Serial.println(j);
 }
+void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
+{
+	if (calibset && pinsset)
+	{
+		if (!zeroset)
+		{
+			GotoZero();
+		}
+
+		long coordXsteps = calibrationX*Xmm;
+
+	}
+	else if (!calibset)
+	{
+		calibrate();
+	}
+
+}
 //void CNCArduinostepsClass::FreqStepsX(long stepsXf, long speedXf)
 //{
 //	timer1freqspeedup = speedXf * 10;
@@ -362,6 +380,7 @@ void CNCArduinostepsClass::StepsY(long stepsYf, long speedYf)
 void CNCArduinostepsClass::GotoZero()
 {
 	if (pinsset) {
+		zeroset = false;
 		Xarrived = false;
 		Yarrived = false;
 		Serial.println("GoingtoZero");
@@ -386,8 +405,9 @@ void CNCArduinostepsClass::GotoZero()
 		{
 			StepsY(1000000, 1000);
 		}
-		
-	
+		newcurcord.currentXs = 0;
+		newcurcord.currentYs = 0;
+		zeroset=true;
 		Serial.println("inzero");
 	}
 }

@@ -61,8 +61,8 @@ void setup() {
 	//DirpinX = 46;
 	//DirpinY = 44;
 	CNCdefectoscope.setpins(46, 44, 13, 2, 52);
-	CNCdefectoscope.setcalibration(0.012, 0.024);
-	CNCdefectoscope.setdxdy(100, 100);
+	//CNCdefectoscope.setcalibration(0.012, 0.024);
+	//CNCdefectoscope.setdxdy(100, 100);
 }
 
 void yinti2()
