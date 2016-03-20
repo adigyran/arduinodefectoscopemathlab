@@ -356,62 +356,65 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
-			if (newcurcord.currentXs < coordXsteps)
+			if (coordXsteps <= maxX && coordYsteps <= maxY)
 			{
-				SetDirX(0);
-				// 20      40                 
-				newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
-				Serial.println(newcurcord.currentXs);
-				Serial.println(" steps X");
-				calculatecurcorunits(newcurcord, newcurcordunits);
-				Serial.print(newcurcordunits.currentXunits);
-				Serial.println(" mm X");
+				if (newcurcord.currentXs < coordXsteps)
+				{
+					SetDirX(0);
+					// 20      40                 
+					newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
+					Serial.println(newcurcord.currentXs);
+					Serial.println(" steps X");
+					calculatecurcorunits(newcurcord, newcurcordunits);
+					Serial.print(newcurcordunits.currentXunits);
+					Serial.println(" mm X");
 
-			}
-			else if (newcurcord.currentXs > coordXsteps)
-			{
-				SetDirX(1);
-				// 40      20                 
-				newcurcord.currentXs = newcurcord.currentXs - StepsX(newcurcord.currentXs - coordXsteps, 1000, 0);
-				Serial.println(newcurcord.currentXs);
-				Serial.println(" steps X");
-				calculatecurcorunits(newcurcord, newcurcordunits);
-				Serial.print(newcurcordunits.currentXunits);
-				Serial.println(" mm X");
-			}
-			else if (newcurcord.currentXs = coordXsteps)
-			{
-				Serial.println("already on coordinate or on zero X");
-			}
+				}
+				else if (newcurcord.currentXs > coordXsteps)
+				{
+					SetDirX(1);
+					// 40      20                 
+					newcurcord.currentXs = newcurcord.currentXs - StepsX(newcurcord.currentXs - coordXsteps, 1000, 0);
+					Serial.println(newcurcord.currentXs);
+					Serial.println(" steps X");
+					calculatecurcorunits(newcurcord, newcurcordunits);
+					Serial.print(newcurcordunits.currentXunits);
+					Serial.println(" mm X");
+				}
+				else if (newcurcord.currentXs = coordXsteps)
+				{
+					Serial.println("already on coordinate or on zero X");
+				}
 
 
 
-			if (newcurcord.currentYs < coordYsteps)
-			{
+				if (newcurcord.currentYs < coordYsteps)
+				{
 
-				SetDirY(1);
-				// 20      40                 
-				newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
-				Serial.println(newcurcord.currentYs);
-				Serial.println(" steps");
-				calculatecurcorunits(newcurcord, newcurcordunits);
-				Serial.print(newcurcordunits.currentYunits);
-				Serial.println(" mm Y");
-			}
-			else if (newcurcord.currentYs > coordYsteps)
-			{
-				SetDirY(0);
-				// 20      40                 
-				newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
-				Serial.println(newcurcord.currentYs);
-				Serial.println(" steps Y");
-				calculatecurcorunits(newcurcord, newcurcordunits);
-				Serial.print(newcurcordunits.currentYunits);
-				Serial.println(" mm Y");
-			}
-			else if (newcurcord.currentYs = coordYsteps)
-			{
-				Serial.println("already on coordinate or on zero Y");
+					SetDirY(1);
+					// 20      40                 
+					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
+					Serial.println(newcurcord.currentYs);
+					Serial.println(" steps");
+					calculatecurcorunits(newcurcord, newcurcordunits);
+					Serial.print(newcurcordunits.currentYunits);
+					Serial.println(" mm Y");
+				}
+				else if (newcurcord.currentYs > coordYsteps)
+				{
+					SetDirY(0);
+					// 20      40                 
+					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
+					Serial.println(newcurcord.currentYs);
+					Serial.println(" steps Y");
+					calculatecurcorunits(newcurcord, newcurcordunits);
+					Serial.print(newcurcordunits.currentYunits);
+					Serial.println(" mm Y");
+				}
+				else if (newcurcord.currentYs = coordYsteps)
+				{
+					Serial.println("already on coordinate or on zero Y");
+				}
 			}
 		}
 
