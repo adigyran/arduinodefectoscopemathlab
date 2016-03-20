@@ -335,7 +335,7 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 		outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
 		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
 	}
-	else { calibrate(); }
+	else { calibrate(2); }
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
@@ -423,7 +423,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 	}
 	else if (!calibset)
 	{
-		calibrate();
+		calibrate(2);
 	}
 
 }
@@ -619,13 +619,13 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("ENB"))
 	{
-		if (amount == 1)
+		if (amount == 0)
 		{
 			digitalWrite(Enablepin, HIGH);
 			Serial.println(digitalRead(52));
 
 		}
-		if (amount == 0)
+		if (amount == 1)
 		{
 			digitalWrite(Enablepin, LOW);
 			Serial.println(digitalRead(52));
@@ -692,14 +692,21 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("XTE"))
 	{
-		Xinterptconc = false;
+		//Xinterptconc = false;
+
 		//FreqStepsX(timer1stepsfull, timer1freq);
-	long totalxsteps = StepsX(timer1stepsfull, timer1freq,DirX);
+		if (timer1freq > 0 && timer1stepsfull > 0)
+		{
+			long totalxsteps = StepsX(timer1stepsfull, timer1freq, DirX);
+		}
+		else { Serial.println("X settings not set"); }
 	}
 	else if (command.equals("GTC"))
 	{
 		double gotoXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
 		double gotoYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		Serial.println(gotoXmm);
+		Serial.println(gotoYmm);
 		GotoCoord(gotoXmm, gotoYmm);
 		
 	}
@@ -713,9 +720,13 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("YTE"))
 	{
-		Yinterptconc = false;
+		//Yinterptconc = false;
 		//FreqStepsY(timer3stepsfull, timer3freq);
+		if (timer3freq > 0 && timer3stepsfull > 0)
+		{
 	long totalysteps = StepsY(timer3stepsfull, timer3freq,DirY);
+		}
+		else { Serial.println("Y settings not set"); }
 	}
 	else
 	{
