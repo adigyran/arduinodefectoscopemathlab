@@ -58,7 +58,7 @@ private:
 	 bool coordintXe, coordintYe;
 	 bool Xarrivd, Yarrivd;
 	 void serialcalibratedx(String calibrcommand);
-	 void calibrate();
+	 void calibrate(long maxcalibr);
 	
 	static  volatile long timer1steps, timer3steps,timer1stepsinter,timer3stepsinter;
 	static  volatile long timer1stepsfull, timer3stepsfull;

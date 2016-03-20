@@ -146,25 +146,27 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand)
 
 }
 
-void CNCArduinostepsClass::calibrate()
+void CNCArduinostepsClass::calibrate(long maxcalibr)
 {
 	xsize = 631;
 	ysize = 886;
-	Serial.println(xsize);
-	Serial.println(ysize);
+	//Serial.println(xsize);
+	//Serial.println(ysize);
 	GotoZero();
 	delay(1000);
 	long clbtr = 0;
-	long d = 26445;
-	long rr = 548;
-	double fgg = (rr*1.0) / (d*1.0);
-	Serial.println(fgg);
-	Serial.println("ff");
+
+	//long maxcalib = maxcalibr;
+	if (maxcalibr < 2)
+	{
+		maxcalibr = 2;
+	}
+	
 	Serial.println(xsize);
 	Serial.println(ysize);
 	long totalstepsclbx = 0;
 	maxX = 0;
-	for (clbtr = 0;clbtr < 2;clbtr++)
+	for (clbtr = 0;clbtr < maxcalibr;clbtr++)
 	{
 		if (DirX == 1)
 		{
@@ -190,7 +192,7 @@ void CNCArduinostepsClass::calibrate()
 
 	long totalstepsclby = 0;
 	maxY = 0;
-	for (clbtr = 0;clbtr < 2;clbtr++)
+	for (clbtr = 0;clbtr < maxcalibr;clbtr++)
 	{
 		if (DirY == 1)
 		{
@@ -608,7 +610,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("CLB"))
 	{
-		calibrate();
+		calibrate(amount);
 
 	}
 	else if (command.equals("MTC"))
