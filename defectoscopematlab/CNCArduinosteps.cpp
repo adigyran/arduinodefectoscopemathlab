@@ -226,9 +226,12 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 	//calibrationY = (double)ysize / (double)totalstepsclby;
 	calibset = true;
 	setcalibration(tempclx, tempcly);
+
 	Serial.println(tempclx,6);
 	Serial.println(tempcly, 6);
-	setdxdy(100, 100);
+	zeroset = false;
+	GotoZero();
+	//setdxdy(100, 100);
 }
 
 void CNCArduinostepsClass::ArrivedX()
