@@ -361,9 +361,11 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
+			Serial.println(newcurcord.currentXs);
+			Serial.println(newcurcord.currentYs);
 			if (((coordXsteps <= maxX)|| Xmm<=xsize) && ((coordYsteps <= maxY) || Ymm <= ysize))
 			{
-				if (newcurcord.currentXs < coordXsteps)
+				if (newcurcord.currentXs < coordXsteps && newcurcord.currentYs < coordYsteps)
 				{
 					SetDirX(0);
 					// 20      40                 
@@ -373,6 +375,14 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					calculatecurcorunits(newcurcord, newcurcordunits);
 					Serial.print(newcurcordunits.currentXunits);
 					Serial.println(" mm X");
+					SetDirY(1);
+					// 20      40                 
+					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
+					Serial.println(newcurcord.currentYs);
+					Serial.println(" steps");
+					calculatecurcorunits(newcurcord, newcurcordunits);
+					Serial.print(newcurcordunits.currentYunits);
+					Serial.println(" mm Y");
 
 				}
 				else if (newcurcord.currentXs > coordXsteps)
