@@ -365,7 +365,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			Serial.println(newcurcord.currentYs);
 			if (((coordXsteps <= maxX)|| Xmm<=xsize) && ((coordYsteps <= maxY) || Ymm <= ysize))
 			{
-				if (newcurcord.currentXs < coordXsteps && newcurcord.currentYs < coordYsteps)
+				if ((newcurcord.currentXs < coordXsteps) && (newcurcord.currentYs < coordYsteps))
 				{
 					SetDirX(0);
 					// 20      40                 
@@ -385,7 +385,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					Serial.println(" mm Y");
 
 				}
-				else if (newcurcord.currentXs > coordXsteps)
+				else if ((newcurcord.currentXs > coordXsteps) && (newcurcord.currentYs > coordYsteps))
 				{
 					SetDirX(1);
 					// 40      20                 
@@ -395,28 +395,6 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					calculatecurcorunits(newcurcord, newcurcordunits);
 					Serial.print(newcurcordunits.currentXunits);
 					Serial.println(" mm X");
-				}
-				else if (newcurcord.currentXs = coordXsteps)
-				{
-					Serial.println("already on coordinate or on zero X");
-				}
-
-
-
-				if (newcurcord.currentYs < coordYsteps)
-				{
-
-					SetDirY(1);
-					// 20      40                 
-					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
-					Serial.println(newcurcord.currentYs);
-					Serial.println(" steps");
-					calculatecurcorunits(newcurcord, newcurcordunits);
-					Serial.print(newcurcordunits.currentYunits);
-					Serial.println(" mm Y");
-				}
-				else if (newcurcord.currentYs > coordYsteps)
-				{
 					SetDirY(0);
 					// 20      40                 
 					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
@@ -426,6 +404,36 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					Serial.print(newcurcordunits.currentYunits);
 					Serial.println(" mm Y");
 				}
+				else if (newcurcord.currentXs = coordXsteps)
+				{
+					Serial.println("already on coordinate or on zero X");
+				}
+
+
+
+				//if (newcurcord.currentYs < coordYsteps)
+				//{
+
+				//	SetDirY(1);
+			///		// 20      40                 
+				//	newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
+				//	Serial.println(newcurcord.currentYs);
+				//	Serial.println(" steps");
+				//	calculatecurcorunits(newcurcord, newcurcordunits);
+				//	Serial.print(newcurcordunits.currentYunits);
+				//	Serial.println(" mm Y");
+				//}
+				//else if (newcurcord.currentYs > coordYsteps)
+				//{
+					//SetDirY(0);
+					// 20      40                 
+					//newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
+					//Serial.println(newcurcord.currentYs);
+					//Serial.println(" steps Y");
+					//calculatecurcorunits(newcurcord, newcurcordunits);
+					//Serial.print(newcurcordunits.currentYunits);
+					//Serial.println(" mm Y");
+				//}
 				else if (newcurcord.currentYs = coordYsteps)
 				{
 					Serial.println("already on coordinate or on zero Y");
