@@ -361,10 +361,13 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
+			Serial.println(Xmm);
+			Serial.println(Ymm);
 			Serial.println(newcurcord.currentXs);
 			Serial.println(newcurcord.currentYs);
 			Serial.println(coordXsteps);
 			Serial.println(coordYsteps);
+			Serial.println("ffre");
 			if (coordXsteps <= maxX && coordYsteps <= maxY)
 			{
 				if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
