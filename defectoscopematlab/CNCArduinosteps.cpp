@@ -374,6 +374,8 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			calibrationX = 0.012;
 			calibrationY = 0.024;
+			xsize = 631;
+			ysize = 886;
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
 			long neededstepsX1 = 0;
