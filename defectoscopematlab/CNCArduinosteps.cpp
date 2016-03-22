@@ -373,6 +373,10 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
+			long neededstepsX1 = 0;
+			long neededstepsY1 = 0;
+			long neededstepsX2 = 0;
+			long neededstepsY2 = 0;
 			Serial.print("Xmm2 - ");
 			Serial.println(Xmm);
 			Serial.print("Ymm2 - ");
@@ -391,42 +395,44 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			Serial.println("Fff");
 			Serial.println(coordXsteps - newcurcord.currentXs);
 			Serial.println(coordYsteps - newcurcord.currentYs);
-			if (coordXsteps <= maxX && coordYsteps <= maxY)
+			if (Xmm <= xsize && Ymm <= ysize)
 			{
 				if (coordXsteps < newcurcord.currentXs)
 				{
 					Serial.println("neededcoordsx < curcordsx");
-					long neededstepsX = newcurcord.currentXs-coordXsteps;
+					neededstepsX1 = newcurcord.currentXs-coordXsteps;
 					SetDirX(1);
 					delay(200);
-					long donestepsx = StepsX(neededstepsX, 1000, 0);
+					long donestepsx = StepsX(neededstepsX1, 1000, 0);
 					newcurcord.currentXs = newcurcord.currentXs - donestepsx;
 				}
 				if (coordXsteps > newcurcord.currentXs)
 				{
 					Serial.println("neededcoordsx > curcordsx");
-					long neededstepsX = coordXsteps - newcurcord.currentXs;
+					neededstepsX2 = coordXsteps - newcurcord.currentXs;
 					SetDirX(0);
 					delay(200);
-					long donestepsx = StepsX(neededstepsX, 1000, 0);
+					long donestepsx = StepsX(neededstepsX2, 1000, 0);
 					newcurcord.currentXs = newcurcord.currentXs + donestepsx;
 				}
 				if (coordYsteps < newcurcord.currentYs)
 				{
 					Serial.println("neededcoordsy < curcordsy");
-					long neededstepsY = newcurcord.currentYs - coordYsteps;
-					SetDirX(0);
+					neededstepsY1 = newcurcord.currentYs - coordYsteps;
+					Serial.println(neededstepsY1);
+					SetDirY(0);
 					delay(200);
-					long donestepsy = StepsY(neededstepsY, 1000, 0);
+					long donestepsy = StepsY(neededstepsY1, 1000, 0);
 					newcurcord.currentYs = newcurcord.currentYs - donestepsy;
 				}
 				if (coordYsteps > newcurcord.currentYs)
 				{
 					Serial.println("neededcoordsy > curcordsy");
-					long neededstepsY = coordYsteps - newcurcord.currentYs;
+					neededstepsY2 = coordYsteps - newcurcord.currentYs;
+					Serial.println(neededstepsY2);
 					SetDirY(1);
 					delay(200);
-					long donestepsy = StepsY(neededstepsY, 1000, 0);
+					long donestepsy = StepsY(neededstepsY2, 1000, 0);
 					newcurcord.currentYs = newcurcord.currentYs + donestepsy;
 				}
 				//if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
