@@ -377,7 +377,9 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			Serial.println(Xmm);
 			Serial.print("Ymm2 - ");
 			Serial.println(Ymm);
+			Serial.print("CurrentXsteps - ");
 			Serial.println(newcurcord.currentXs);
+			Serial.print("CurrentYsteps - ");
 			Serial.println(newcurcord.currentYs);
 			Serial.print("Xsteps2 - ");
 			Serial.println(coordXsteps);
@@ -470,7 +472,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				//	Serial.print(newcurcordunits.currentYunits);
 				//	Serial.println(" mm Y");
 				//}
-				else if (newcurcord.currentXs == coordXsteps || newcurcord.currentYs == coordYsteps)
+				if (newcurcord.currentXs == coordXsteps || newcurcord.currentYs == coordYsteps)
 				{
 					Serial.println("already on coordinate or on zero X");
 				}
@@ -501,7 +503,10 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					//Serial.println(" mm Y");
 				//}
 				
-				
+				Serial.print("CurrentXsteps2 - ");
+				Serial.println(newcurcord.currentXs);
+				Serial.print("CurrentYsteps2 - ");
+				Serial.println(newcurcord.currentYs);
 			}
 			else 
 			{
