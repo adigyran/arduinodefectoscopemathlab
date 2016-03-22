@@ -364,13 +364,16 @@ void CNCArduinostepsClass::SetDirY(byte diry)
 }
 void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 {
-	if (calibset && pinsset)
+	//if (calibset && pinsset)
+	if(pinsset)
 	{
 		if (!zeroset)
 		{
 			GotoZero();
 		}
 		if ((Xmm >= 0) && (Ymm >= 0)) {
+			calibrationX = 0.012;
+			calibrationY = 0.024;
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
 			long neededstepsX1 = 0;
@@ -434,6 +437,8 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					SetDirY(1);
 					digitalWrite(DirpinY, HIGH);
 					delay(200);
+					Serial.print("difii ");
+					Serial.println(neededstepsY2);
 					long donestepsy = StepsY(neededstepsY2, 1000, 1);
 					newcurcord.currentYs = newcurcord.currentYs + donestepsy;
 				}
@@ -523,10 +528,10 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		}
 
 	}
-	else if (!calibset)
-	{
-		calibrate(2);
-	}
+	//else if (!calibset)
+	//{
+	//	calibrate(2);
+	//}
 
 }
 //void CNCArduinostepsClass::FreqStepsX(long stepsXf, long speedXf)
