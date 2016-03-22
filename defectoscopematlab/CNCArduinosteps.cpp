@@ -181,7 +181,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 		
 		maxX = 0;
 	 long totalxsteps =StepsX(100000, 1000,DirX);
-		totalstepsclbx = maxX + totalstepsclbx;
+		totalstepsclbx = totalxsteps + totalstepsclbx;
 		Serial.println(totalstepsclbx);
 		Serial.println(maxX);
 		delay(1000);
@@ -189,7 +189,8 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 	GotoZero();
 	delay(1000);
 	 clbtr = 0;
-
+	 Serial.print("X-");
+	 Serial.println(totalstepsclbx);
 	long totalstepsclby = 0;
 	maxY = 0;
 	for (clbtr = 0;clbtr < maxcalibr;clbtr++)
@@ -207,16 +208,19 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 
 		maxY = 0;
 	long totalysteps = StepsY(100000, 1000,DirY);
-		totalstepsclby = maxY + totalstepsclby;
+		totalstepsclby = totalysteps + totalstepsclby;
 		Serial.println(totalstepsclby);
 		Serial.println(maxY);
 		delay(1000);
 	}
 	
-	Serial.println(totalstepsclbx);
+	Serial.print("Y-");
+	Serial.println(totalstepsclby);
 	Serial.println(maxX);
 	totalstepsclbx = totalstepsclbx / clbtr;
+	maxX = totalstepsclbx;
 	totalstepsclby = totalstepsclby / clbtr;
+	maxY = totalstepsclby;
 	Serial.println(totalstepsclbx);
 	Serial.println("ss");
 	Serial.println(totalstepsclby);
@@ -268,7 +272,7 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	}
 	Serial.println("Dir");
 	Serial.println(DirX);
-	long ix = 0;
+	long ix = 1;
 	for (ix;ix < stepsXf; ix++)
 	{
 		if ((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0)))
@@ -299,7 +303,8 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		Xinterptconc2 = false;
 	}
 	//Xinterptconc = false;
-	long iy = 0;
+	long tempspeedYf = speedYf*1000;
+	long iy = 1;
 	//long j = 0;
 	for (iy;iy < stepsYf; iy++)
 	{
@@ -307,7 +312,14 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//if (pulseXelapsed > 100000) {
 		//Serial.print("y");
 			//Serial.println(i);
-			StepY(speedYf);
+		//	if(iy<stepsYf/4)
+		//	{
+			//	tempspeedYf = (speedYf * 1000) - iy;
+			//	StepY(tempspeedYf);
+			//	}
+			//else {
+				StepY(speedYf);
+		//	}
 			
 			//	if(!Xinterptconc)
 				//{
@@ -361,17 +373,43 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 		if ((Xmm >= 0) && (Ymm >= 0)) {
 			long coordXsteps = abs(Xmm / calibrationX);
 			long coordYsteps = abs(Ymm / calibrationY);
+			Serial.print("Xmm2 - ");
 			Serial.println(Xmm);
+			Serial.print("Ymm2 - ");
 			Serial.println(Ymm);
 			Serial.println(newcurcord.currentXs);
 			Serial.println(newcurcord.currentYs);
+			Serial.print("Xsteps2 - ");
 			Serial.println(coordXsteps);
+			Serial.print("Ysteps2 - ");
 			Serial.println(coordYsteps);
 			Serial.println("ffre");
+			Serial.println(maxX);
+			Serial.println(maxY);
+			Serial.println("Fff");
+			Serial.println(coordXsteps - newcurcord.currentXs);
+			Serial.println(coordYsteps - newcurcord.currentYs);
 			if (coordXsteps <= maxX && coordYsteps <= maxY)
 			{
+				if (coordXsteps < newcurcord.currentXs)
+				{
+					Serial.println("neededcoordsx < curcordsx");
+				}
+				if (coordXsteps > newcurcord.currentXs)
+				{
+					Serial.println("neededcoordsx > curcordsx");
+				}
+				if (coordYsteps < newcurcord.currentYs)
+				{
+					Serial.println("neededcoordsy < curcordsy");
+				}
+				if (coordYsteps > newcurcord.currentYs)
+				{
+					Serial.println("neededcoordsy > curcordsy");
+				}
 				if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
 				{
+					Serial.println("newcoord < currcords");
 					SetDirX(0);
 					// 20      40                 
 					newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
@@ -393,6 +431,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				}
 				else if ((coordXsteps > newcurcord.currentXs) && (coordYsteps > newcurcord.currentYs))
 				{
+					Serial.println("newcoord < currcords");
 					SetDirX(1);
 					// 40      20                 
 					newcurcord.currentXs = newcurcord.currentXs - StepsX(newcurcord.currentXs - coordXsteps, 1000, 0);
@@ -734,7 +773,9 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	{
 		double gotoXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
 		double gotoYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		Serial.println("gotoXmm");
 		Serial.println(gotoXmm);
+		Serial.println("gotoYmm");
 		Serial.println(gotoYmm);
 		GotoCoord(gotoXmm, gotoYmm);
 		
