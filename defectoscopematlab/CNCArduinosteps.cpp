@@ -407,49 +407,49 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				{
 					Serial.println("neededcoordsy > curcordsy");
 				}
-				if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
-				{
-					Serial.println("newcoord < currcords");
-					SetDirX(0);
+				//if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
+				//{
+				//	Serial.println("newcoord < currcords");
+				//	SetDirX(0);
 					// 20      40                 
-					newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
-					Serial.println(newcurcord.currentXs);
-					Serial.println(" steps X");
-					calculatecurcorunits(newcurcord, newcurcordunits);
-					Serial.print(newcurcordunits.currentXunits);
-					Serial.println(" mm X");
-					delay(1000);
-					SetDirY(1);
+				//	newcurcord.currentXs = newcurcord.currentXs + StepsX(coordXsteps - newcurcord.currentXs, 1000, 0);
+				//	Serial.println(newcurcord.currentXs);
+				//	Serial.println(" steps X");
+				//	calculatecurcorunits(newcurcord, newcurcordunits);
+				//	Serial.print(newcurcordunits.currentXunits);
+				//	Serial.println(" mm X");
+				//	delay(1000);
+				//	SetDirY(1);
 					// 20      40                 
-					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
-					Serial.println(newcurcord.currentYs);
-					Serial.println(" steps");
-					calculatecurcorunits(newcurcord, newcurcordunits);
-					Serial.print(newcurcordunits.currentYunits);
-					Serial.println(" mm Y");
+				//	newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 1);
+				//	Serial.println(newcurcord.currentYs);
+				//	Serial.println(" steps");
+				//	calculatecurcorunits(newcurcord, newcurcordunits);
+				//	Serial.print(newcurcordunits.currentYunits);
+				//	Serial.println(" mm Y");
 
-				}
-				else if ((coordXsteps > newcurcord.currentXs) && (coordYsteps > newcurcord.currentYs))
-				{
-					Serial.println("newcoord < currcords");
-					SetDirX(1);
+				//}
+				//else if ((coordXsteps > newcurcord.currentXs) && (coordYsteps > newcurcord.currentYs))
+			//	{
+			//		Serial.println("newcoord < currcords");
+			//		SetDirX(1);
 					// 40      20                 
-					newcurcord.currentXs = newcurcord.currentXs - StepsX(newcurcord.currentXs - coordXsteps, 1000, 0);
-					Serial.println(newcurcord.currentXs);
-					Serial.println(" steps X");
-					calculatecurcorunits(newcurcord, newcurcordunits);
-					Serial.print(newcurcordunits.currentXunits);
-					Serial.println(" mm X");
-					delay(1000);
-					SetDirY(0);
+				//	newcurcord.currentXs = newcurcord.currentXs - StepsX(newcurcord.currentXs - coordXsteps, 1000, 0);
+				//	Serial.println(newcurcord.currentXs);
+				//	Serial.println(" steps X");
+				//	calculatecurcorunits(newcurcord, newcurcordunits);
+				//	Serial.print(newcurcordunits.currentXunits);
+				//	Serial.println(" mm X");
+				//	delay(1000);
+				//	SetDirY(0);
 					// 20      40                 
-					newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
-					Serial.println(newcurcord.currentYs);
-					Serial.println(" steps Y");
-					calculatecurcorunits(newcurcord, newcurcordunits);
-					Serial.print(newcurcordunits.currentYunits);
-					Serial.println(" mm Y");
-				}
+				//	newcurcord.currentYs = newcurcord.currentYs + StepsY(coordYsteps - newcurcord.currentYs, 1000, 0);
+				//	Serial.println(newcurcord.currentYs);
+				//	Serial.println(" steps Y");
+				//	calculatecurcorunits(newcurcord, newcurcordunits);
+				//	Serial.print(newcurcordunits.currentYunits);
+				//	Serial.println(" mm Y");
+				//}
 				else if (newcurcord.currentXs == coordXsteps || newcurcord.currentYs == coordYsteps)
 				{
 					Serial.println("already on coordinate or on zero X");
