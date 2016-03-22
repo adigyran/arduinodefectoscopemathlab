@@ -272,7 +272,7 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	}
 	Serial.println("Dir");
 	Serial.println(DirX);
-	long ix = 1;
+	long ix = 0;
 	for (ix;ix < stepsXf; ix++)
 	{
 		if ((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0)))
@@ -296,15 +296,18 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 }
 long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 {
-	if (DirX == 0) {
-		Xinterptconc = false;
+	Serial.print("ffggtr - ");
+	Serial.println(stepsYf);
+	//Serial.println(dirY);
+	if (DirY == 0) {
+		Yinterptconc = false;
 	}
-	else if (DirX == 1) {
-		Xinterptconc2 = false;
+	else if (DirY == 1) {
+		Yinterptconc2 = false;
 	}
 	//Xinterptconc = false;
 	long tempspeedYf = speedYf*1000;
-	long iy = 1;
+	long iy = 0;
 	//long j = 0;
 	for (iy;iy < stepsYf; iy++)
 	{
@@ -423,12 +426,16 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				if (coordYsteps < newcurcord.currentYs)
 				{
 					Serial.println("neededcoordsy < curcordsy");
-					neededstepsY1 = newcurcord.currentYs - coordYsteps;
+					neededstepsY1 = abs(newcurcord.currentYs - coordYsteps);
+					Serial.print("neededstpes - ");
 					Serial.println(neededstepsY1);
 					SetDirY(0);
 					digitalWrite(DirpinY, LOW);
 					delay(200);
+					Serial.print("rrr - ");
+					Serial.println(neededstepsY1);
 					long donestepsy = StepsY(neededstepsY1, 1000, 0);
+
 					newcurcord.currentYs = newcurcord.currentYs - donestepsy;
 				}
 				if (coordYsteps > newcurcord.currentYs)
