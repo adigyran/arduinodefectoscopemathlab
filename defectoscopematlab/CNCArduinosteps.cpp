@@ -403,7 +403,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					neededstepsX1 = newcurcord.currentXs-coordXsteps;
 					SetDirX(1);
 					delay(200);
-					long donestepsx = StepsX(neededstepsX1, 1000, 0);
+					long donestepsx = StepsX(neededstepsX1, 1000, 1);
 					newcurcord.currentXs = newcurcord.currentXs - donestepsx;
 				}
 				if (coordXsteps > newcurcord.currentXs)
@@ -421,6 +421,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					neededstepsY1 = newcurcord.currentYs - coordYsteps;
 					Serial.println(neededstepsY1);
 					SetDirY(0);
+					digitalWrite(DirpinY, 0);
 					delay(200);
 					long donestepsy = StepsY(neededstepsY1, 1000, 0);
 					newcurcord.currentYs = newcurcord.currentYs - donestepsy;
@@ -431,8 +432,9 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					neededstepsY2 = coordYsteps - newcurcord.currentYs;
 					Serial.println(neededstepsY2);
 					SetDirY(1);
+					digitalWrite(DirpinY, 1);
 					delay(200);
-					long donestepsy = StepsY(neededstepsY2, 1000, 0);
+					long donestepsy = StepsY(neededstepsY2, 1000, 1);
 					newcurcord.currentYs = newcurcord.currentYs + donestepsy;
 				}
 				//if ((coordXsteps < newcurcord.currentXs) && (coordYsteps < newcurcord.currentYs))
