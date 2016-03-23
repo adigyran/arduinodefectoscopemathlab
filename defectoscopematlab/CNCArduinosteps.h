@@ -37,7 +37,7 @@ public:
 	
 	currencoord getcurrencoord();
 	currencoordunits getcurrentcoordunits();
-	void setsizeofscan(double Xmmsize, double Ymmsize);
+	void setsizeofscan(String sizecommand);
 	
 	static  void Yinterpt(bool yplus); //переменная определяет какой из концевиков сработал, в отрицательном либо положительном направлении
 	static  void Xinterpt(bool xplus);
@@ -50,6 +50,7 @@ private:
 	 double calibrationX, calibrationY; //calibration to the system units (сколько мм в одном шаге)
 	 long currentX, currentY; //в шагах
 	 double currentXun, currentYun; // в мм
+	 double firstscanX, firstscanY;
 	 long testingstepsX, testingfreqX;
 	 bool testingenableX;
 	 byte testingdirX;

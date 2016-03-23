@@ -850,7 +850,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		Serial.println(maxscansizeXmm);
 		Serial.println("maxscansizeYmm");
 		Serial.println(maxscansizeYmm);
-		setsizeofscan(maxscansizeXmm, maxscansizeYmm);
+		setsizeofscan(amountstri);
 
 	}
 	else if (command.equals("YTF"))
@@ -894,16 +894,32 @@ CNCArduinostepsClass::currencoordunits CNCArduinostepsClass::getcurrentcoordunit
 	return currencoordunits();
 }
 
-void CNCArduinostepsClass::setsizeofscan(double Xmmsize, double Ymmsize)
+void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 {
 	if (pinsset)
 	{
 		if (calibset)
 		{
-			if (Xmmsize < xsize && Ymmsize < ysize) {
-				maxXscansize = abs(Xmmsize / calibrationX);
-				maxYscansize = abs(Xmmsize / calibrationY);
+			String firstcordtemp = sizecommand.substring(0, sizecommand.indexOf('&'));
+			String maxcoordtemp = sizecommand.substring(sizecommand.indexOf('&') + 1, sizecommand.indexOf('#'));
+			//Serial.println(calibrationtemp);
+			//Serial.println(dxtemp);
+			double calibrationXtemp = calibrationtemp.substring(0, calibrationtemp.indexOf('$')).toFloat();
+			//Serial.println(calibrationXtemp);
+			double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
+			//Serial.println(calibrationYtemp);
+			double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
+			//Serial.println(dxXtemp);
+			double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
+			if (Xmmsizem < xsize && Ymmsizem < ysize && Xmmsizem < xsize && Ymmsizem < ysize) {
+				maxXscansize = abs(Xmmsizem / calibrationX);
+				maxYscansize = abs(Xmmsizem / calibrationY);
+				firstscanX = abs(Xmmsize / calibrationX);
+				firstscanY = abs(Ymmsize / calibrationY);
 				maxscanset = true;
+
+				GotoZero();
+				//GotoCoord(Xmmsize, Ymmsize);
 			}
 		}
 		else
