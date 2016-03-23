@@ -832,6 +832,17 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		GotoCoord(gotoXmm, gotoYmm);
 		
 	}
+	else if (command.equals("MSS"))
+	{
+		double maxscansizeXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
+		double maxscansizeYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		Serial.println("maxscansizeXmm");
+		Serial.println(maxscansizeXmm);
+		Serial.println("maxscansizeYmm");
+		Serial.println(maxscansizeYmm);
+		setsizeofscan(maxscansizeXmm, maxscansizeYmm);
+
+	}
 	else if (command.equals("YTF"))
 	{
 		timer3freq = amount;
@@ -879,8 +890,8 @@ void CNCArduinostepsClass::setsizeofscan(double Xmmsize, double Ymmsize)
 	{
 		if (calibset)
 		{
-			maxXscansize = Xmmsize / calibrationX;
-			maxYscansize = Xmmsize / calibrationY;
+			maxXscansize = abs(Xmmsize / calibrationX);
+			maxYscansize = abs(Xmmsize / calibrationY);
 		}
 		else
 		{
