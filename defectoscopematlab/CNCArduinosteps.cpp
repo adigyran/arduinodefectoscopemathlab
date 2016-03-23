@@ -264,11 +264,17 @@ void CNCArduinostepsClass::ArrivedY()
 //{
 //}
 
-void CNCArduinostepsClass::Scan()
+void CNCArduinostepsClass::Scan(bool firststepgo)
 {
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
-		GotoCoord(firstscanX, firstscanY);
+		if (firststepgo) {
+			GotoCoord(firstscanX, firstscanY);
+			Serial.println(newcurcordunits.currentXunits);
+			Serial.println(newcurcordunits.currentYunits);
+		}
+
+
 	}
 	else
 	{
@@ -543,6 +549,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				Serial.println(newcurcord.currentXs);
 				Serial.print("CurrentYsteps2 - ");
 				Serial.println(newcurcord.currentYs);
+				calculatecurcorunits(newcurcord, newcurcordunits);
 			}
 			else 
 			{
