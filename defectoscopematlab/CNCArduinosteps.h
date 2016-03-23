@@ -28,6 +28,8 @@ public:
 		double currentYunits;
 	};
 	void init();
+	//CNCArduinostepsClass();
+//	~CNCArduinostepsClass();
 	void setpins(byte dirx, byte diry, byte xsteppin, byte ysteppin, byte enablepin);
 	void setdxdy(double dxXunits, double dxYunits);
 	void setcalibration(double calibX, double calibY);

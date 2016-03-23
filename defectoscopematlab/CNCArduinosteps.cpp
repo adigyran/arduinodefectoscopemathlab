@@ -37,6 +37,8 @@ void CNCArduinostepsClass::init()
 	DirpinX = 46;
 	DirpinY = 44;
 	maxscanset = false;
+	xsize = 631;
+	ysize = 886;
 	
 	
 
