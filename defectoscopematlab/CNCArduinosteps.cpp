@@ -298,6 +298,13 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 				GotoCoord(newcurcordunits.currentXunits-dxX, newcurcordunits.currentYunits);
 				Serial.print("SCor"); // scancoordinates for mathlab
 				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
+				
+			}
+			else if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize)
+			{
+				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
+				Serial.print("SCor"); // scancoordinates for mathlab
+				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
 				scanxbackwards = false;
 			}
 		}
