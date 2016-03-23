@@ -268,7 +268,7 @@ void CNCArduinostepsClass::Scan()
 {
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
-
+		GotoCoord(firstscanX, firstscanY);
 	}
 	else
 	{
@@ -913,9 +913,9 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 			double Ymmsizem = maxcoordtemp.substring(maxcoordtemp.indexOf('$') + 1, maxcoordtemp.length()).toFloat();
 			if (Xmmsizem < xsize && Ymmsizem < ysize && Xmmsizem < xsize && Ymmsizem < ysize) {
 				maxXscansize = abs(Xmmsizem / calibrationX);
-				maxYscansize = abs(Xmmsizem / calibrationY);
-				firstscanX = abs(Xmmsize / calibrationX);
-				firstscanY = abs(Ymmsize / calibrationY);
+				maxYscansize = abs(Ymmsizem / calibrationY);
+				firstscanX = Xmmsize;
+				firstscanY = Ymmsize;
 				maxscanset = true;
 
 				GotoZero();
