@@ -904,13 +904,13 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 			String maxcoordtemp = sizecommand.substring(sizecommand.indexOf('&') + 1, sizecommand.indexOf('#'));
 			//Serial.println(calibrationtemp);
 			//Serial.println(dxtemp);
-			double calibrationXtemp = calibrationtemp.substring(0, calibrationtemp.indexOf('$')).toFloat();
+			double Xmmsize =firstcordtemp.substring(0, firstcordtemp.indexOf('$')).toFloat();
 			//Serial.println(calibrationXtemp);
-			double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
+			double Ymmsize = firstcordtemp.substring(firstcordtemp.indexOf('$') + 1, firstcordtemp.length()).toFloat();
 			//Serial.println(calibrationYtemp);
-			double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
+			double Xmmsizem = maxcoordtemp.substring(0, maxcoordtemp.indexOf('$')).toFloat();
 			//Serial.println(dxXtemp);
-			double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
+			double Ymmsizem = maxcoordtemp.substring(maxcoordtemp.indexOf('$') + 1, maxcoordtemp.length()).toFloat();
 			if (Xmmsizem < xsize && Ymmsizem < ysize && Xmmsizem < xsize && Ymmsizem < ysize) {
 				maxXscansize = abs(Xmmsizem / calibrationX);
 				maxYscansize = abs(Xmmsizem / calibrationY);
