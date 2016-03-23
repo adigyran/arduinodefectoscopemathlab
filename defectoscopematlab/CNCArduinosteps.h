@@ -52,7 +52,7 @@ private:
 	 double currentXun, currentYun; // β μμ
 	 double firstscanX, firstscanY;
 	 long testingstepsX, testingfreqX;
-	 bool testingenableX;
+	 bool testingenableX,scanxbackwards;
 	 byte testingdirX;
 	 byte testingdirY;
 	 byte DirX, DirY;
