@@ -36,7 +36,7 @@ void CNCArduinostepsClass::init()
 	Enablepin = 52;
 	DirpinX = 46;
 	DirpinY = 44;
-	
+	maxscanset = false;
 	
 	
 
@@ -264,6 +264,14 @@ void CNCArduinostepsClass::ArrivedY()
 
 void CNCArduinostepsClass::Scan()
 {
+	if (pinsset && dxdyset &&maxscanset && calibset)
+	{
+
+	}
+	else
+	{
+		Serial.println("Missing settings");
+	}
 }
 
 long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
@@ -892,6 +900,7 @@ void CNCArduinostepsClass::setsizeofscan(double Xmmsize, double Ymmsize)
 		{
 			maxXscansize = abs(Xmmsize / calibrationX);
 			maxYscansize = abs(Xmmsize / calibrationY);
+			maxscanset = true;
 		}
 		else
 		{

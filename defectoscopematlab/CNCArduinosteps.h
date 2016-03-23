@@ -76,7 +76,7 @@ private:
 	// static void Xintert();
 	 long desirX, desirdY; // where is next stop
 	 byte Xpin, Ypin;
-	 bool pinsset,calibset,dxdyset,zeroset;
+	 bool pinsset,calibset,dxdyset,zeroset,maxscanset;
 	 byte DirpinX, DirpinY, Enablepin;
 	 void Scan();
 	 long StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
