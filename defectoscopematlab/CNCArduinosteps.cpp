@@ -900,9 +900,11 @@ void CNCArduinostepsClass::setsizeofscan(double Xmmsize, double Ymmsize)
 	{
 		if (calibset)
 		{
-			maxXscansize = abs(Xmmsize / calibrationX);
-			maxYscansize = abs(Xmmsize / calibrationY);
-			maxscanset = true;
+			if (Xmmsize < xsize && Ymmsize < ysize) {
+				maxXscansize = abs(Xmmsize / calibrationX);
+				maxYscansize = abs(Xmmsize / calibrationY);
+				maxscanset = true;
+			}
 		}
 		else
 		{
