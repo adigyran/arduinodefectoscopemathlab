@@ -809,6 +809,16 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		testingfreqX = amount;
 
 	}
+	else if (command.equals("SFS")) //первая точка для сканирование
+	{
+		Scan(true);
+
+	}
+	else if (command.equals("SNS")) // продолжение сканирования
+	{
+		Scan(false);
+
+	}
 	else if (command.equals("XSE"))
 	{
 		testingenableX = amount;
