@@ -35,6 +35,7 @@ public:
 	
 	currencoord getcurrencoord();
 	currencoordunits getcurrentcoordunits();
+	void setsizeofscan(double Xmmsize, double Ymmsize);
 	
 	static  void Yinterpt(bool yplus); //переменная определяет какой из концевиков сработал, в отрицательном либо положительном направлении
 	static  void Xinterpt(bool xplus);
@@ -52,7 +53,7 @@ private:
 	 byte testingdirX;
 	 byte testingdirY;
 	 byte DirX, DirY;
-	 long maxX, maxY;
+	 long maxX, maxY,maxXscansize,maxYscansize;
 	 long xsize, ysize;
 	 bool timer1s, timer3s;
 	 bool coordintXe, coordintYe;
@@ -77,6 +78,7 @@ private:
 	 byte Xpin, Ypin;
 	 bool pinsset,calibset,dxdyset,zeroset;
 	 byte DirpinX, DirpinY, Enablepin;
+	 void Scan();
 	 long StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
 	 long StepsY(long stepsYf, long speedYf, byte directy);
 	 void calculatecurcorunits(currencoord inputcurcor, currencoordunits &outputcurcorunits);
