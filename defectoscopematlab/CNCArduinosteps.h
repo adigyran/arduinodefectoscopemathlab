@@ -51,6 +51,7 @@ private:
 	 long currentX, currentY; //в шагах
 	 double currentXun, currentYun; // в мм
 	 double firstscanX, firstscanY;
+	 long firstscanXsteps, firstscanYsteps;
 	 long testingstepsX, testingfreqX;
 	 bool testingenableX,scanxbackwards;
 	 byte testingdirX;

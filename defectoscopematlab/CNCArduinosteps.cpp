@@ -281,7 +281,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 		Serial.println(newcurcordunits.currentXunits);
 		Serial.println(newcurcordunits.currentYunits);
 		Serial.print("fgfg - ");
-		Serial.println(newcurcordunits.currentXunits - dxX);
+		Serial.println(newcurcordunits.currentXunits - dxXun);
 		if (firststepgo) {
 			Serial.println(firstscanX);
 			Serial.println(firstscanY);
@@ -313,14 +313,14 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 				scanxbackwards = true;
 				going = true;
 			}
-			else if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards&&!going)
+			else if (newcurcord.currentXs-dxX>=firstscanXsteps && scanxbackwards&&!going)
 			{
-				GotoCoord(newcurcordunits.currentXunits-dxX, newcurcordunits.currentYunits);
+				GotoCoord(newcurcordunits.currentXunits-dxXun, newcurcordunits.currentYunits);
 				returncoordtomatlab();
 				going = true;
 				
 			}
-			else if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize&&!going)
+			else if (newcurcord.currentXs - dxX < firstscanXsteps && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
 				returncoordtomatlab();
@@ -482,22 +482,22 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 		//{
 		//	if(j)
 		//}
-		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) && (digitalRead(18) == HIGH && DirX == 1)))
+		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
 		}
-		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) && (digitalRead(21) == HIGH && DirY == 0)))
+		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
 		}
-		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) && (digitalRead(18) == HIGH && DirX == 1)))
+		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
 		}
-		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) && (digitalRead(21) == HIGH && DirY == 0)))
+		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
@@ -1075,6 +1075,8 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 				maxYscansize = abs(Ymmsizem / calibrationY);
 				firstscanX = Xmmsize;
 				firstscanY = Ymmsize;
+				firstscanXsteps = abs(Xmmsize / calibrationX);
+				firstscanYsteps = abs(Ymmsize / calibrationY);
 				Serial.println(firstscanX);
 				Serial.println(firstscanY);
 				Serial.println(maxXscansize);
