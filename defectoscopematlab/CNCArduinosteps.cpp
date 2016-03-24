@@ -286,21 +286,21 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 				Serial.print("SCor"); // scancoordinates for mathlab
 				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
 			}
-			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards )
+			if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards )
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits+dxYun);
 				Serial.print("SCor"); // scancoordinates for mathlab
 				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
 				scanxbackwards = true;
 			}
-			else if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards)
+			 if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards)
 			{
 				GotoCoord(newcurcordunits.currentXunits-dxX, newcurcordunits.currentYunits);
 				Serial.print("SCor"); // scancoordinates for mathlab
 				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
 				
 			}
-			else if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize)
+			if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
 				Serial.print("SCor"); // scancoordinates for mathlab
