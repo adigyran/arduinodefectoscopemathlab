@@ -117,7 +117,7 @@ void CNCArduinostepsClass::Arrivedtostop()
 	//Serial.println(info);
 }
 
-void CNCArduinostepsClass::serialcalibratedx(String calibrcommand)
+void CNCArduinostepsClass::serialcalibratedx(String calibrcommand) // установка dxX и dxY с парсингом команды по последовательному порту
 {
 	//String calibrationtemp = calibrcommand.substring(0, calibrcommand.indexOf('&'));
 	String dxtemp = calibrcommand;
