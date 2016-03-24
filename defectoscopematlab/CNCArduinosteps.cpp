@@ -128,9 +128,9 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand) // установка 
 	//double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
 	//Serial.println(calibrationYtemp);
 	double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
-	//Serial.println(dxXtemp);
+	Serial.println(dxXtemp);
 	double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
-	//Serial.println(dxYtemp);
+	Serial.println(dxYtemp);
 	//double calibrationXtemp = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
 	///Serial.println(amountstri.substring(0, amountstri.indexOf('$')));
 	//double calibrationYtemp = amountstri.substring(amountstri.indexOf('$')+1, amountstri.indexOf('&')).toFloat();
@@ -736,6 +736,7 @@ void CNCArduinostepsClass::setdxdy(double dxXunits, double dxYunits)
 {
 	dxXun = dxXunits;
 	dxYun = dxYunits;
+	
 	
 	if (calibset)
 	{
