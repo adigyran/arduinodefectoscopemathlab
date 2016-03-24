@@ -275,6 +275,9 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 	{
 		Serial.print("gort");
 		Serial.println(newcurcordunits.currentXunits + dxXun);
+		Serial.println(scanxbackwards);
+		Serial.println(newcurcordunits.currentXunits);
+		Serial.println(newcurcordunits.currentYunits);
 		if (firststepgo) {
 			Serial.println(firstscanX);
 			Serial.println(firstscanY);
@@ -282,6 +285,8 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 			
 			Serial.println(newcurcordunits.currentXunits);
 			Serial.println(newcurcordunits.currentYunits);
+			Serial.print("fgfg - ");
+			Serial.println(newcurcordunits.currentXunits - dxX);
 			Serial.print("SCor"); // scancoordinates for mathlab
 			Serial.print(newcurcordunits.currentXunits+'$'+ newcurcordunits.currentYunits + '\n');
 			scanxbackwards = false;
