@@ -306,7 +306,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 				returncoordtomatlab();
 				going = true;
 			}
-			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards &&!going)
+			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxYscansize && !scanxbackwards &&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits+dxYun);
 				returncoordtomatlab();
@@ -320,7 +320,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 				going = true;
 				
 			}
-			else if (newcurcord.currentXs - dxX < firstscanXsteps && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize&&!going)
+			else if (newcurcord.currentXs - dxX < firstscanXsteps && scanxbackwards && newcurcord.currentYs + dxY <= maxYscansize&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
 				returncoordtomatlab();
