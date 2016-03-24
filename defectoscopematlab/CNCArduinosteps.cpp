@@ -182,7 +182,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 		digitalWrite(DirpinX, DirX);
 		
 		maxX = 0;
-	 long totalxsteps =StepsX(100000, 1000,DirX);
+	 long totalxsteps =StepsX(100000, 600,DirX);
 		totalstepsclbx = totalxsteps + totalstepsclbx;
 		Serial.println(totalstepsclbx);
 		Serial.println(maxX);
@@ -209,7 +209,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 		digitalWrite(DirpinY, DirY);
 
 		maxY = 0;
-	long totalysteps = StepsY(100000, 1000,DirY);
+	long totalysteps = StepsY(100000, 600,DirY);
 		totalstepsclby = totalysteps + totalstepsclby;
 		Serial.println(totalstepsclby);
 		Serial.println(maxY);
@@ -666,11 +666,11 @@ void CNCArduinostepsClass::GotoZero()
 		Serial.println(digitalRead(18));
 		if (digitalRead(18) == HIGH)
 		{
-		long totalxsteps = StepsX(1000000, 1000,1);
+		long totalxsteps = StepsX(1000000, 600,1);
 		}
 		if (digitalRead(21) == HIGH)
 		{
-		long totalysteps = StepsY(1000000, 1000,0);
+		long totalysteps = StepsY(1000000, 600,0);
 		}
 		newcurcord.currentXs = 0;
 		newcurcord.currentYs = 0;
