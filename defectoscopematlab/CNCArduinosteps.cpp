@@ -472,6 +472,14 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 		{
 			StepsY(1, 1000, 0);
 		}
+		if (i <= minsteps && maxy)
+		{
+			StepsX(1, 1000, 0);
+		}
+		if (i <= minsteps && maxx)
+		{
+			StepsY(1, 1000, 0);
+		}
 	}
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
