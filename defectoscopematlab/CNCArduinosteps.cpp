@@ -182,7 +182,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 		digitalWrite(DirpinX, DirX);
 		
 		maxX = 0;
-	 long totalxsteps =StepsX(100000, 600,DirX);
+	 long totalxsteps =StepsX(100000, 1000,DirX);
 		totalstepsclbx = totalxsteps + totalstepsclbx;
 		Serial.println(totalstepsclbx);
 		Serial.println(maxX);
@@ -209,7 +209,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr)
 		digitalWrite(DirpinY, DirY);
 
 		maxY = 0;
-	long totalysteps = StepsY(100000, 600,DirY);
+	long totalysteps = StepsY(100000, 1000,DirY);
 		totalstepsclby = totalysteps + totalstepsclby;
 		Serial.println(totalstepsclby);
 		Serial.println(maxY);
@@ -340,10 +340,10 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 
 long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 {
-	if (DirX == 0 && digitalRead(19)==HIGH) {
+	if (DirX == 0 ) {
 		Xinterptconc = false;
 	}
-	else if (DirX == 1 && digitalRead(18)==HIGH) {
+	else if (DirX == 1) {
 		Xinterptconc2 = false;
 
 	}
@@ -376,10 +376,10 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.print("ffggtr - ");
 	Serial.println(stepsYf);
 	//Serial.println(dirY);
-	if (DirY == 0 && digitalRead(21) == HIGH) {
+	if (DirY == 0 ) {
 		Yinterptconc = false;
 	}
-	else if (DirY == 1 && digitalRead(20) == HIGH) {
+	else if (DirY == 1 ) {
 		Yinterptconc2 = false;
 	}
 	//Xinterptconc = false;
@@ -750,11 +750,11 @@ void CNCArduinostepsClass::GotoZero()
 		Serial.println(digitalRead(18));
 		if (digitalRead(18) == HIGH)
 		{
-		long totalxsteps = StepsX(1000000, 600,1);
+		long totalxsteps = StepsX(1000000, 1000,1);
 		}
 		if (digitalRead(21) == HIGH)
 		{
-		long totalysteps = StepsY(1000000, 600,0);
+		long totalysteps = StepsY(1000000, 1000,0);
 		}
 		newcurcord.currentXs = 0;
 		newcurcord.currentYs = 0;
