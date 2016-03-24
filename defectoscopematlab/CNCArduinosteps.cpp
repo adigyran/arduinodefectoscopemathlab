@@ -968,6 +968,17 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		GotoCoord(gotoXmm, gotoYmm);
 		
 	}
+	else if (command.equals("SMT")) // езда одновременно
+	{
+		double gotoXmmsim = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
+		double gotoYmmsim = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		Serial.println("gotoXmmsim");
+		Serial.println(gotoXmmsim);
+		Serial.println("gotoYmmsim");
+		Serial.println(gotoYmmsim);
+		simultengoxy(gotoXmmsim, gotoYmmsim);
+
+	}
 	else if (command.equals("MSS"))
 	{
 		//double maxscansizeXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
