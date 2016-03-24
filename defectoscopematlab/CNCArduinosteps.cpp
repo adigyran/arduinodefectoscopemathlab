@@ -980,6 +980,10 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 				maxYscansize = abs(Ymmsizem / calibrationY);
 				firstscanX = Xmmsize;
 				firstscanY = Ymmsize;
+				Serial.println(firstscanX);
+				Serial.println(firstscanY);
+				Serial.println(maxXscansize);
+				Serial.println(maxYscansize);
 				maxscanset = true;
 
 				GotoZero();
