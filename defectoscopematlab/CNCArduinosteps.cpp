@@ -440,6 +440,21 @@ void CNCArduinostepsClass::returncoordtomatlab()
 
 
 }
+void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
+{
+	long maxsteps;
+	long minsteps;
+	if (Xstepssim > Ystepssim)
+	{
+		maxsteps = Xstepssim;
+		minsteps = Ystepssim;
+	}
+	else if (Ystepssim > Xstepssim)
+	{
+		maxsteps = Ystepssim;
+		minsteps = Xstepssim;
+	}
+}
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
 	digitalWrite(DirpinX, dirx);
