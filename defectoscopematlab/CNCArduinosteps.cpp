@@ -883,7 +883,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("MTC"))
 	{
-		serialcalibratedx(amountstri);
+		serialcalibratedx(amountstri); //установка dxXun dxYun
 	}
 	else if (command.equals("ENB"))
 	{
