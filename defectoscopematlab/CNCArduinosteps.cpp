@@ -270,6 +270,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 	Serial.println(dxdyset);
 	Serial.println(maxscanset);
 	Serial.println(calibset);
+	returncoordtomatlab();
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
@@ -426,6 +427,15 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
 	}
 	else { calibrate(2); }
+}
+void CNCArduinostepsClass::returncoordtomatlab()
+{
+	Serial.print("SCor"); // scancoordinates for mathlab
+	Serial.print(newcurcordunits.currentXunits);
+	Serial.print('$');
+	Serial.print(newcurcordunits.currentYunits + '\n');
+
+
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
