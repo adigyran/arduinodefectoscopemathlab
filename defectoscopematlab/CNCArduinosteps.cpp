@@ -343,7 +343,7 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	if (DirX == 0 && digitalRead(19)==HIGH) {
 		Xinterptconc = false;
 	}
-	else if (DirX == 1 && digitalRead(18)==LOW) {
+	else if (DirX == 1 && digitalRead(18)==HIGH) {
 		Xinterptconc2 = false;
 
 	}
