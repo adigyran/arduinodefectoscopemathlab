@@ -119,13 +119,13 @@ void CNCArduinostepsClass::Arrivedtostop()
 
 void CNCArduinostepsClass::serialcalibratedx(String calibrcommand)
 {
-	String calibrationtemp = calibrcommand.substring(0, calibrcommand.indexOf('&'));
-	String dxtemp = calibrcommand.substring(calibrcommand.indexOf('&') + 1, calibrcommand.indexOf('#'));
+	//String calibrationtemp = calibrcommand.substring(0, calibrcommand.indexOf('&'));
+	String dxtemp = calibrcommand;
 	//Serial.println(calibrationtemp);
 	//Serial.println(dxtemp);
-	double calibrationXtemp = calibrationtemp.substring(0, calibrationtemp.indexOf('$')).toFloat();
+	//double calibrationXtemp = calibrationtemp.substring(0, calibrationtemp.indexOf('$')).toFloat();
 	//Serial.println(calibrationXtemp);
-	double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
+	//double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
 	//Serial.println(calibrationYtemp);
 	double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
 	//Serial.println(dxXtemp);
@@ -143,7 +143,7 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand)
 	//Serial.println(calibrationYtemp);
 	//Serial.println(dxXtemp);
 	//Serial.println(dxYtemp);
-	setcalibration(calibrationXtemp, calibrationYtemp);
+	//setcalibration(calibrationXtemp, calibrationYtemp);
 	setdxdy(dxXtemp, dxYtemp);
 
 }
@@ -736,7 +736,7 @@ void CNCArduinostepsClass::setdxdy(double dxXunits, double dxYunits)
 {
 	dxXun = dxXunits;
 	dxYun = dxYunits;
-	dxdyset = true;
+	
 	if (calibset)
 	{
 		dxX = abs((double)dxXun / calibrationX);
@@ -745,6 +745,7 @@ void CNCArduinostepsClass::setdxdy(double dxXunits, double dxYunits)
 		Serial.println(dxY);
 		Serial.println(dxXun);
 		Serial.println(dxYun);
+		dxdyset = true;
 
 
 	}
@@ -896,12 +897,12 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("MSS"))
 	{
-		double maxscansizeXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
-		double maxscansizeYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
-		Serial.println("maxscansizeXmm");
-		Serial.println(maxscansizeXmm);
-		Serial.println("maxscansizeYmm");
-		Serial.println(maxscansizeYmm);
+		//double maxscansizeXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
+		//double maxscansizeYmm = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		//Serial.println("maxscansizeXmm");
+		//Serial.println(maxscansizeXmm);
+		//Serial.println("maxscansizeYmm");
+		//Serial.println(maxscansizeYmm);
 		setsizeofscan(amountstri);
 
 	}
