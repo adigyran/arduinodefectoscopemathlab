@@ -492,44 +492,28 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 			StepX(600);
 			donestepsx++;
 		}
-		else
-		{
-			donex = true;
-		}
+		
 		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
 			donestepsy++;
 		}
-		else
-		{
-			doney = true;
-		}
+		
 		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
 			donestepsx++;
 		}
-		else
-		{
-			donex = true;
-		}
+		
 		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
 			donestepsy++;
 		}
-		else
-		{
-			doney = true;
-		}
-		if (donex && doney)
-		{
-			break;
-		}
+		
 	}
 	Serial.print("donestepsx - ");
 	Serial.println(donestepsx);
