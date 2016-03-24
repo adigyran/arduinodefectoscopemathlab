@@ -273,8 +273,13 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
+		Serial.print("gort");
+		Serial.println(newcurcordunits.currentXunits + dxXun);
 		if (firststepgo) {
+			Serial.println(firstscanX);
+			Serial.println(firstscanY);
 			GotoCoord(firstscanX, firstscanY);
+			
 			Serial.println(newcurcordunits.currentXunits);
 			Serial.println(newcurcordunits.currentYunits);
 			Serial.print("SCor"); // scancoordinates for mathlab
@@ -286,6 +291,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 		{
 			if (newcurcord.currentXs+dxX <= maxXscansize && !scanxbackwards)
 			{
+				
 				GotoCoord(newcurcordunits.currentXunits + dxXun, newcurcordunits.currentYunits);
 				Serial.print("SCor"); // scancoordinates for mathlab
 				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
