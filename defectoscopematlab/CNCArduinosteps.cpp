@@ -376,10 +376,10 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.print("ffggtr - ");
 	Serial.println(stepsYf);
 	//Serial.println(dirY);
-	if (DirY == 0) {
+	if (DirY == 0 && digitalRead(21) == HIGH) {
 		Yinterptconc = false;
 	}
-	else if (DirY == 1) {
+	else if (DirY == 1 && digitalRead(20) == HIGH) {
 		Yinterptconc2 = false;
 	}
 	//Xinterptconc = false;
