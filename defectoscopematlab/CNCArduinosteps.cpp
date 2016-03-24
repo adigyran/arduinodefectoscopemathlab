@@ -473,27 +473,31 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 	Serial.println(minsteps);
 	Serial.println(maxx);
 	Serial.println(maxy);
+	Serial.println(digitalRead(19));
+	Serial.println(digitalRead(18));
+	Serial.println(DirX);
+	Serial.println(DirY);
 	for (long i = 0;i < maxsteps;i++) {
 		//for (long j = 0; j < minsteps; j++)
 		//{
 		//	if(j)
 		//}
-		if (i <= maxsteps && maxx && (digitalRead(18)==HIGH ||digitalRead(19)==HIGH))
+		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) && (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
 		}
-		if (i <= maxsteps && maxy &&(digitalRead(20) == HIGH || digitalRead(21) == HIGH))
+		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) && (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
 		}
-		if (i <= minsteps && maxy && (digitalRead(18) == HIGH || digitalRead(19) == HIGH))
+		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) && (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
 		}
-		if (i <= minsteps && maxx &&(digitalRead(20) == HIGH || digitalRead(21) == HIGH))
+		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) && (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
