@@ -340,11 +340,12 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 
 long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 {
-	if (DirX == 0) {
+	if (DirX == 0 && digitalRead(19)==HIGH) {
 		Xinterptconc = false;
 	}
-	else if (DirX == 1) {
+	else if (DirX == 1 && digitalRead(18)==LOW) {
 		Xinterptconc2 = false;
+
 	}
 	Serial.println("Dir");
 	Serial.println(DirX);
