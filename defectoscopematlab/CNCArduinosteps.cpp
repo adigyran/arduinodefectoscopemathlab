@@ -445,6 +445,8 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 {
 	long maxsteps = 0;
 	long minsteps = 0;
+	long donestepsx = 0;
+	long donestepsy = 0;
 	bool maxy = false;
 	bool maxx = false;
 	Serial.println(Xstepssim);
@@ -486,23 +488,32 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
+			donestepsx++;
 		}
 		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
+			donestepsy++;
 		}
 		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
 			StepX(600);
+			donestepsx++;
 		}
 		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(600);
+			donestepsy++;
 		}
 	}
+	Serial.print("donestepsx - ");
+	Serial.println(donestepsx);
+	Serial.print("donestepsy - ");
+	Serial.println(donestepsy);
+
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
