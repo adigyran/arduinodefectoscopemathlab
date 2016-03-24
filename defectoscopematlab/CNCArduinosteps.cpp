@@ -271,6 +271,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 	Serial.println(maxscanset);
 	Serial.println(calibset);
 	returncoordtomatlab();
+	bool going = false;
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
@@ -298,29 +299,34 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 		}
 		else
 		{
-			if (newcurcord.currentXs+dxX <= maxXscansize && !scanxbackwards)
+			if (newcurcord.currentXs+dxX <= maxXscansize && !scanxbackwards &&!going)
 			{
 				
 				GotoCoord(newcurcordunits.currentXunits + dxXun, newcurcordunits.currentYunits);
 				returncoordtomatlab();
+				going = true;
 			}
-			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards )
+			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards &&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits+dxYun);
 				returncoordtomatlab();
 				scanxbackwards = true;
+				going = true;
 			}
-			else if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards)
+			else if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits-dxX, newcurcordunits.currentYunits);
 				returncoordtomatlab();
+				going = true;
 				
 			}
-			else if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize)
+			else if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
 				returncoordtomatlab();
+				going = true;
 				scanxbackwards = false;
+				
 			}
 		}
 
