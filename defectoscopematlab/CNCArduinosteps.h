@@ -28,6 +28,8 @@ public:
 		double currentYunits;
 	};
 	void init();
+	//CNCArduinostepsClass();
+//	~CNCArduinostepsClass();
 	void setpins(byte dirx, byte diry, byte xsteppin, byte ysteppin, byte enablepin);
 	void setdxdy(double dxXunits, double dxYunits);
 	void setcalibration(double calibX, double calibY);
@@ -35,6 +37,7 @@ public:
 	
 	currencoord getcurrencoord();
 	currencoordunits getcurrentcoordunits();
+	void setsizeofscan(String sizecommand);
 	
 	static  void Yinterpt(bool yplus); //переменная определяет какой из концевиков сработал, в отрицательном либо положительном направлении
 	static  void Xinterpt(bool xplus);
@@ -47,12 +50,13 @@ private:
 	 double calibrationX, calibrationY; //calibration to the system units (сколько мм в одном шаге)
 	 long currentX, currentY; //в шагах
 	 double currentXun, currentYun; // в мм
+	 double firstscanX, firstscanY;
 	 long testingstepsX, testingfreqX;
-	 bool testingenableX;
+	 bool testingenableX,scanxbackwards;
 	 byte testingdirX;
 	 byte testingdirY;
 	 byte DirX, DirY;
-	 long maxX, maxY;
+	 long maxX, maxY,maxXscansize,maxYscansize;
 	 long xsize, ysize;
 	 bool timer1s, timer3s;
 	 bool coordintXe, coordintYe;
@@ -75,8 +79,9 @@ private:
 	// static void Xintert();
 	 long desirX, desirdY; // where is next stop
 	 byte Xpin, Ypin;
-	 bool pinsset,calibset,dxdyset,zeroset;
+	 bool pinsset,calibset,dxdyset,zeroset,maxscanset;
 	 byte DirpinX, DirpinY, Enablepin;
+	 void Scan(bool firststepgo);
 	 long StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
 	 long StepsY(long stepsYf, long speedYf, byte directy);
 	 void calculatecurcorunits(currencoord inputcurcor, currencoordunits &outputcurcorunits);

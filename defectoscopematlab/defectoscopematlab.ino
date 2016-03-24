@@ -51,7 +51,7 @@ void setup() {
 	//pinMode(3, INPUT);
 	pinMode(3, INPUT);
 	//pinMode(2, INPUT);
-	
+	CNCdefectoscope.init();
 	attachInterrupt(3, yinti, FALLING);
 	attachInterrupt(2, yinti2, FALLING);
 	attachInterrupt(4, xinti, FALLING);
