@@ -443,10 +443,12 @@ void CNCArduinostepsClass::returncoordtomatlab()
 }
 void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 {
-	long maxsteps;
-	long minsteps;
+	long maxsteps = 0;
+	long minsteps = 0;
 	bool maxy = false;
 	bool maxx = false;
+	Serial.println(Xstepssim);
+	Serial.println(Ystepssim);
 	if (Xstepssim > Ystepssim)
 	{
 		maxsteps = Xstepssim;
@@ -460,26 +462,41 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 		minsteps = Xstepssim;
 		maxy = true;
 	}
+	else if (Ystepssim == Xstepssim)
+	{
+		maxx = true;
+		maxy = true;
+		maxsteps = Ystepssim;
+		minsteps = Ystepssim;
+	}
+	Serial.println(maxsteps);
+	Serial.println(minsteps);
+	Serial.println(maxx);
+	Serial.println(maxy);
 	for (long i = 0;i < maxsteps;i++) {
 		//for (long j = 0; j < minsteps; j++)
 		//{
 		//	if(j)
 		//}
-		if (i <= maxsteps && maxx)
+		if (i <= maxsteps && maxx && (digitalRead(18)==HIGH ||digitalRead(19)==HIGH))
 		{
-			StepsX(1, 1000, 0);
+			//StepsX(1, 1, 0);
+			StepX(600);
 		}
-		if (i <= maxsteps && maxy)
+		if (i <= maxsteps && maxy &&(digitalRead(20) == HIGH || digitalRead(21) == HIGH))
 		{
-			StepsY(1, 1000, 0);
+			//StepsY(1, 1, 0);
+			StepY(600);
 		}
-		if (i <= minsteps && maxy)
+		if (i <= minsteps && maxy && (digitalRead(18) == HIGH || digitalRead(19) == HIGH))
 		{
-			StepsX(1, 1000, 0);
+			//StepsX(1, 1, 0);
+			StepX(600);
 		}
-		if (i <= minsteps && maxx)
+		if (i <= minsteps && maxx &&(digitalRead(20) == HIGH || digitalRead(21) == HIGH))
 		{
-			StepsY(1, 1000, 0);
+			//StepsY(1, 1, 0);
+			StepY(600);
 		}
 	}
 }
