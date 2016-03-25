@@ -558,49 +558,51 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		//{
 		//	if(j)
 		//}
-		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
+		if (((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0))) && ((!Yinterptconc && DirY == 0) || (!Yinterptconc2 && DirY == 1)))
 		{
-			//StepsX(1, 1, 0);
-			StepX(SpeedX);
-			donestepsx++;
-		}
-		else {delayMicroseconds(SpeedX);
-	}
-		
-		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
-		{
-			//StepsY(1, 1, 0);
-			StepY(SpeedY);
-			donestepsy++;
-		}
-		else {
-			delayMicroseconds(SpeedY);
-		}
-		
-		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
-		{
-			//StepsX(1, 1, 0);
-			StepX(SpeedX);
-			donestepsx++;
-		}
-		else {
-			delayMicroseconds(SpeedX);
-		}
-		
-		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
-		{
-			//StepsY(1, 1, 0);
-			StepY(SpeedY);
-			donestepsy++;
-		}
-		else {
-			delayMicroseconds(SpeedY);
-		}
+			if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
+			{
+				//StepsX(1, 1, 0);
+				StepX(SpeedX);
+				donestepsx++;
+			}
+			else {
+				delayMicroseconds(SpeedX);
+			}
 
-		if (((Xinterptconc && (DirX == 1)) || (Xinterptconc2 && (DirX == 0))) && ((Yinterptconc && DirY == 0) || (Yinterptconc2 && DirY == 1)))
-		{
-			break;
+			if (i <= maxsteps && maxy && ((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
+			{
+				//StepsY(1, 1, 0);
+				StepY(SpeedY);
+				donestepsy++;
+			}
+			else {
+				delayMicroseconds(SpeedY);
+			}
+
+			if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
+			{
+				//StepsX(1, 1, 0);
+				StepX(SpeedX);
+				donestepsx++;
+			}
+			else {
+				delayMicroseconds(SpeedX);
+			}
+
+			if (i <= minsteps && maxx && ((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
+			{
+				//StepsY(1, 1, 0);
+				StepY(SpeedY);
+				donestepsy++;
+			}
+			else {
+				delayMicroseconds(SpeedY);
+			}
+
 		}
+		else break;
+		
 		
 	}
 	Serial.print("donestepsx - ");
