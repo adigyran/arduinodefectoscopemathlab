@@ -988,9 +988,16 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	else if (command.equals("CLB"))
 	{
 		long calibrcounts = amountstri.substring(0, amountstri.indexOf('$')).toInt();
-		bool simulcalibr = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length());
-
-		calibrate(amount,simulcalibr);
+		String simulcalibr = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length());
+		if (simulcalibr == "true")
+		{
+			calibrate(amount, true);
+		}
+		if (simulcalibr == "false")
+		{
+			calibrate(amount, false);
+		}
+		//calibrate(amount,simulcalibr);
 
 	}
 	else if (command.equals("MTC"))
