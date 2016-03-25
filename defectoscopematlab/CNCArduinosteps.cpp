@@ -446,6 +446,11 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	long speedcoef = stepsYf / 10;
 	Serial.println(speedcoef);
 	Serial.println((stepsYf - speedcoef) % 2);
+	Serial.println(((stepsYf-1) - speedcoef) % 2);
+	Serial.println(((stepsYf -2) - speedcoef) % 2);
+	Serial.println(stepsYf % 10);
+	Serial.println((stepsYf - 1)% 10);
+	Serial.println((stepsYf - 2)&10);
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
 	Serial.println((stepsYf - speedcoef) % 4);
@@ -455,6 +460,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
 	Serial.println((stepsYf - speedcoef) % 16);
+	Serial.println(((stepsYf - speedcoef) % 16)&1);
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
 	long iy = 0;
