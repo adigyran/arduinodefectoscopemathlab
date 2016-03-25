@@ -506,16 +506,17 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			if (iy < sboost && experimentr>333)
 			{
 				experimentr = 1666 - (koef*iy);
+				Serial.println(experimentr);
 			}
-			if (iy > stepsYf - sboost && experimentr < 1600)
+			if (iy > (stepsYf - (sboost*2)) && experimentr < 1600)
 			{
 				//Serial.println(stepsYf - sboost);
 				//Serial.println(experimentr);
 				fofo = stepsYf - iy;
 				//experimentr = koef*(stepsYf-iy)+333;
 				//experimentr = 333 + (koef*fofo);
-				experimentr = (koef*iy) - 1666;
-				//Serial.println(experimentr);
+				experimentr = experimentr + 1 * (fofo);
+				Serial.println(experimentr);
 			}
 			//Serial.println(experimentr);
 			StepY(experimentr);
