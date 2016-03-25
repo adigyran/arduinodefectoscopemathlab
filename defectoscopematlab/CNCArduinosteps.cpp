@@ -259,12 +259,16 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 			maxX = 0;
 			maxY = 0;
 			//long totalxsteps = StepsX(100000, 1000, DirX);
-			calibg = simultengoxy(100000, 100000);
+			calibg = simultengoxy(100000, 100000,1000,1000);
+			calibg.currentXs = calibg.currentXs + calibg.currentXs;
+			calibg.currentYs = calibg.currentYs + calibg.currentYs;
 			//totalstepsclbx = totalxsteps + totalstepsclbx;
 			//Serial.println(totalstepsclbx);
 			//Serial.println(maxX);
 			delay(1000);
 		}
+		calibg.currentXs = calibg.currentXs/clbtr;
+		calibg.currentYs = calibg.currentYs/clbtr;
 		GotoZero();
 	}
 	Serial.println(calibg.currentXs);
@@ -496,6 +500,14 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 	bool maxx = false;
 	bool donex = false;
 	bool doney = false;
+	if (SpeedX <= 0)
+	{
+		SpeedX = 1000;
+	}
+	if (SpeedY <=0)
+	{
+		SpeedY = 1000;
+	}
 	currencoord outputtemp;
 	Serial.println(Xstepssim);
 	Serial.println(Ystepssim);
@@ -1098,7 +1110,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		Serial.println(gotoXmmsim);
 		Serial.println("gotoYmmsim");
 		Serial.println(gotoYmmsim);
-		simultengoxy(gotoXmmsim, gotoYmmsim);
+		simultengoxy(gotoXmmsim, gotoYmmsim,timer1freq,timer3freq);
 
 	}
 	else if (command.equals("MSS"))
