@@ -455,30 +455,36 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//	StepY(tempspeedYf);
 			//	}
 			//else {
-			if (timer == 1000)
+			if (timer == 100)
 			{
 				
 				
 				tempspeedY = 1250;
 			}
-			if (timer == 2000)
+			if (timer == 200)
 			{
 
 
 				tempspeedY = 833;
 			}
-			if (timer == 3000)
+			if (timer == 300)
 			{
 
 
 				tempspeedY = 555;
 			}
-			if (timer == 4000)
+			if (timer == 400)
 			{
 
 
 				tempspeedY = 416;
 			}
+			//if (timer == 500)
+			//{
+
+
+				//tempspeedY = 333;
+		//	}
 
 				StepY(tempspeedY);
 
@@ -1061,7 +1067,23 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 			Serial.println(digitalRead(52));
 		}
 	}
-
+	else if (command.equals("TSR"))
+	{
+		SetDirY(1);
+		for (int i = 0;i < 20; i++)
+		{
+			StepsY(1000000, 1666, 1);
+			delay(500);
+			if (DirY == 0)
+			{
+				SetDirY(1);
+			}
+			else if (DirY == 1)
+			{
+				SetDirY(0);
+			}
+		}
+	}
 	else if (command.equals("XSD"))
 	{
 		testingdirX = amount;
