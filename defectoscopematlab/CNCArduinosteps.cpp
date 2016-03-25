@@ -506,12 +506,17 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 			StepX(1000);
 			donestepsx++;
 		}
+		else {delayMicroseconds(1000);
+	}
 		
 		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
 			StepY(1000);
 			donestepsy++;
+		}
+		else {
+			delayMicroseconds(1000);
 		}
 		
 		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
@@ -520,6 +525,9 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 			StepX(1000);
 			donestepsx++;
 		}
+		else {
+			delayMicroseconds(1000);
+		}
 		
 		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
@@ -527,13 +535,22 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 			StepY(1000);
 			donestepsy++;
 		}
+		else {
+			delayMicroseconds(1000);
+		}
+
+		if (((Xinterptconc && (DirX == 1)) || (Xinterptconc2 && (DirX == 0))) && ((Yinterptconc && DirY == 0) || (Yinterptconc2 && DirY == 1)))
+		{
+			break;
+		}
 		
 	}
 	Serial.print("donestepsx - ");
 	Serial.println(donestepsx);
 	Serial.print("donestepsy - ");
 	Serial.println(donestepsy);
-
+	maxX = donestepsx;
+	maxY = donestepsy;
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
