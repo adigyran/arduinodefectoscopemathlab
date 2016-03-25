@@ -473,12 +473,12 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 
 				tempspeedY = 555;
 			}
-			if (timer == 400)
-			{
+			//if (timer == 800)
+			//{
 
 
-				tempspeedY = 416;
-			}
+				//tempspeedY = 416;
+		//	}
 			//if (timer == 500)
 			//{
 
