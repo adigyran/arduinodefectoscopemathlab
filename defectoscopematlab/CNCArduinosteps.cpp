@@ -442,6 +442,8 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	long tempspeedYf = speedYf*1000;
 	long testingyempspeed = 1666;
 	long tempspeedY = 1666; //600 гц нужно
+	long experimentr = 2000;
+	int ogol = 0;
 	//на каждые n/10 увеличение скорости в два раза
 	long speedcoef = stepsYf / 10;
 	Serial.println(speedcoef);
@@ -450,7 +452,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.println(((stepsYf -2) - speedcoef) % 2);
 	Serial.println(stepsYf % 10);
 	Serial.println((stepsYf - 1)% 10);
-	Serial.println((stepsYf - 2)&10);
+	Serial.println((stepsYf - 2)%10);
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
 	Serial.println((stepsYf - speedcoef) % 4);
@@ -463,6 +465,10 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.println(((stepsYf - speedcoef) % 16)&1);
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
+	if (stepsYf > 100)
+	{
+		long sboost = stepsYf / 100;
+	}
 	long iy = 0;
 	//long j = 0;
 	for (iy;iy < stepsYf; iy++)
@@ -477,38 +483,24 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//	StepY(tempspeedYf);
 			//	}
 			//else {
-			if (timer == 100)
+			//if (timer == 100)
+			//{
+			//if (experimentr>=350)
+			//{
+			//	experimentr = experimentr/2;
+		//	}
+			
+			if (ogol == 10 && experimentr>=600)
 			{
-				
-				
-				tempspeedY = 1250;
+				experimentr = experimentr -30;
+				ogol = 0;
 			}
-			if (timer == 200)
-			{
-
-
-				tempspeedY = 833;
-			}
-			if (timer == 300)
-			{
-
-
-				tempspeedY = 555;
-			}
-			if (timer == 500)
-			{
-
-
-				tempspeedY = 416;
-			}
-			if (timer == 800)
-			{
-
-
-				tempspeedY = 333;
-			}
-
-				StepY(tempspeedY);
+			
+			
+				StepY(experimentr);
+				ogol++;
+				//Serial.println(experimentr);
+				//delayMicroseconds(experimentr);
 
 
 			//	Serial.println(tempspeedY);
@@ -532,6 +524,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//delayMicroseconds(1000);
 			//pulseXelapsed = 0;
 			//}
+			//	experimentr = 0;
 		}
 		else break;
 	}
