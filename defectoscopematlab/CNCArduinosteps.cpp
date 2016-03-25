@@ -148,7 +148,7 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand) // установка 
 
 }
 
-void CNCArduinostepsClass::calibrate(long maxcalibr)
+void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 886;
@@ -430,7 +430,7 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 		outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
 		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
 	}
-	else { calibrate(2); }
+	else { calibrate(2,false); }
 }
 void CNCArduinostepsClass::returncoordtomatlab()
 {
@@ -441,7 +441,7 @@ void CNCArduinostepsClass::returncoordtomatlab()
 
 
 }
-void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
+CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 {
 	long maxsteps = 0;
 	long minsteps = 0;
@@ -451,6 +451,7 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 	bool maxx = false;
 	bool donex = false;
 	bool doney = false;
+	currencoord outputtemp;
 	Serial.println(Xstepssim);
 	Serial.println(Ystepssim);
 	if (DirX == 0) {
@@ -551,6 +552,9 @@ void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
 	Serial.println(donestepsy);
 	maxX = donestepsx;
 	maxY = donestepsy;
+	outputtemp.currentXs = donestepsx;
+	outputtemp.currentYs = donestepsy;
+	return outputtemp;
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
@@ -737,7 +741,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 	}
 	else if (!calibset)
 	{
-		calibrate(2);
+		calibrate(2,false);
 	}
 
 }
@@ -926,7 +930,10 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("CLB"))
 	{
-		calibrate(amount);
+		long calibrcounts = amountstri.substring(0, amountstri.indexOf('$')).toInt();
+		bool simulcalibr = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length());
+
+		calibrate(amount,simulcalibr);
 
 	}
 	else if (command.equals("MTC"))
@@ -1137,7 +1144,7 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 		}
 		else
 		{
-			calibrate(2);
+			calibrate(2,false);
 		}
 	}
 }
