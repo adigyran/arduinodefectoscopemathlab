@@ -266,46 +266,67 @@ void CNCArduinostepsClass::ArrivedY()
 
 void CNCArduinostepsClass::Scan(bool firststepgo)
 {
+	Serial.println(pinsset);
+	Serial.println(dxdyset);
+	Serial.println(maxscanset);
+	Serial.println(calibset);
+	returncoordtomatlab();
+	bool going = false;
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
+		Serial.print("gort");
+		Serial.println(newcurcordunits.currentXunits + dxXun);
+		Serial.println(scanxbackwards);
+		Serial.println(newcurcordunits.currentXunits);
+		Serial.println(newcurcordunits.currentYunits);
+		Serial.print("fgfg - ");
+		Serial.println(newcurcordunits.currentXunits - dxXun);
 		if (firststepgo) {
+			Serial.println(firstscanX);
+			Serial.println(firstscanY);
 			GotoCoord(firstscanX, firstscanY);
+			
 			Serial.println(newcurcordunits.currentXunits);
 			Serial.println(newcurcordunits.currentYunits);
-			Serial.print("SCor"); // scancoordinates for mathlab
-			Serial.print(newcurcordunits.currentXunits+'$'+ newcurcordunits.currentYunits + '\n');
+			//Serial.print("fgfg - ");
+			//Serial.println(newcurcordunits.currentXunits - dxX);
+			//Serial.print("SCor"); // scancoordinates for mathlab
+			returncoordtomatlab();
+			//Serial.print(newcurcordunits.currentXunits+'$'+ newcurcordunits.currentYunits + '\n');
 			scanxbackwards = false;
 			//Serial.print(newcurcordunits.currentYunits+'\n');
 		}
 		else
 		{
-			if (newcurcord.currentXs+dxX <= maxXscansize && !scanxbackwards)
+			if (newcurcord.currentXs+dxX <= maxXscansize && !scanxbackwards &&!going)
 			{
+				
 				GotoCoord(newcurcordunits.currentXunits + dxXun, newcurcordunits.currentYunits);
-				Serial.print("SCor"); // scancoordinates for mathlab
-				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
+				returncoordtomatlab();
+				going = true;
 			}
-			if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxXscansize && !scanxbackwards )
+			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxYscansize && !scanxbackwards &&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits+dxYun);
-				Serial.print("SCor"); // scancoordinates for mathlab
-				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
+				returncoordtomatlab();
 				scanxbackwards = true;
+				going = true;
 			}
-			 if (newcurcord.currentXs-dxX>=firstscanX && scanxbackwards)
+			else if (newcurcord.currentXs-dxX>=firstscanXsteps && scanxbackwards&&!going)
 			{
-				GotoCoord(newcurcordunits.currentXunits-dxX, newcurcordunits.currentYunits);
-				Serial.print("SCor"); // scancoordinates for mathlab
-				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
+				GotoCoord(newcurcordunits.currentXunits-dxXun, newcurcordunits.currentYunits);
+				returncoordtomatlab();
+				going = true;
 				
 			}
-			if (newcurcord.currentXs - dxX < firstscanX && scanxbackwards && newcurcord.currentYs + dxY <= maxXscansize)
+			else if (newcurcord.currentXs - dxX < firstscanXsteps && scanxbackwards && newcurcord.currentYs + dxY <= maxYscansize&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
-				Serial.print("SCor"); // scancoordinates for mathlab
-				Serial.print(newcurcordunits.currentXunits + '$' + newcurcordunits.currentYunits + '\n');
+				returncoordtomatlab();
+				going = true;
 				scanxbackwards = false;
+				
 			}
 		}
 
@@ -319,11 +340,12 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 
 long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 {
-	if (DirX == 0) {
+	if (DirX == 0 ) {
 		Xinterptconc = false;
 	}
 	else if (DirX == 1) {
 		Xinterptconc2 = false;
+
 	}
 	Serial.println("Dir");
 	Serial.println(DirX);
@@ -354,10 +376,10 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.print("ffggtr - ");
 	Serial.println(stepsYf);
 	//Serial.println(dirY);
-	if (DirY == 0) {
+	if (DirY == 0 ) {
 		Yinterptconc = false;
 	}
-	else if (DirY == 1) {
+	else if (DirY == 1 ) {
 		Yinterptconc2 = false;
 	}
 	//Xinterptconc = false;
@@ -409,6 +431,109 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
 	}
 	else { calibrate(2); }
+}
+void CNCArduinostepsClass::returncoordtomatlab()
+{
+	Serial.print("SCor"); // scancoordinates for mathlab
+	Serial.print(newcurcordunits.currentXunits);
+	Serial.print('$');
+	Serial.println(newcurcordunits.currentYunits);
+
+
+}
+void CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
+{
+	long maxsteps = 0;
+	long minsteps = 0;
+	long donestepsx = 0;
+	long donestepsy = 0;
+	bool maxy = false;
+	bool maxx = false;
+	bool donex = false;
+	bool doney = false;
+	Serial.println(Xstepssim);
+	Serial.println(Ystepssim);
+	if (DirX == 0) {
+		Xinterptconc = false;
+	}
+	else if (DirX == 1) {
+		Xinterptconc2 = false;
+
+	}
+	if (DirY == 0) {
+		Yinterptconc = false;
+	}
+	else if (DirY == 1) {
+		Yinterptconc2 = false;
+	}
+	if (Xstepssim > Ystepssim)
+	{
+		maxsteps = Xstepssim;
+		minsteps = Ystepssim;
+		maxx = true;
+
+	}
+
+	else if (Ystepssim > Xstepssim)
+	{
+		maxsteps = Ystepssim;
+		minsteps = Xstepssim;
+		maxy = true;
+	}
+	else if (Ystepssim == Xstepssim)
+	{
+		maxx = true;
+		maxy = true;
+		maxsteps = Ystepssim;
+		minsteps = Ystepssim;
+	}
+	Serial.println(maxsteps);
+	Serial.println(minsteps);
+	Serial.println(maxx);
+	Serial.println(maxy);
+	Serial.println(digitalRead(19));
+	Serial.println(digitalRead(18));
+	Serial.println(DirX);
+	Serial.println(DirY);
+	for (long i = 0;i < maxsteps;i++) {
+		//for (long j = 0; j < minsteps; j++)
+		//{
+		//	if(j)
+		//}
+		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
+		{
+			//StepsX(1, 1, 0);
+			StepX(1000);
+			donestepsx++;
+		}
+		
+		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
+		{
+			//StepsY(1, 1, 0);
+			StepY(1000);
+			donestepsy++;
+		}
+		
+		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
+		{
+			//StepsX(1, 1, 0);
+			StepX(1000);
+			donestepsx++;
+		}
+		
+		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
+		{
+			//StepsY(1, 1, 0);
+			StepY(1000);
+			donestepsy++;
+		}
+		
+	}
+	Serial.print("donestepsx - ");
+	Serial.println(donestepsx);
+	Serial.print("donestepsy - ");
+	Serial.println(donestepsy);
+
 }
 void CNCArduinostepsClass::SetDirX(byte dirx)
 {
@@ -789,7 +914,7 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 	}
 	else if (command.equals("MTC"))
 	{
-		serialcalibratedx(amountstri);
+		serialcalibratedx(amountstri); //установка dxXun dxYun
 	}
 	else if (command.equals("ENB"))
 	{
@@ -896,6 +1021,17 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		GotoCoord(gotoXmm, gotoYmm);
 		
 	}
+	else if (command.equals("SMT")) // езда одновременно
+	{
+		double gotoXmmsim = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
+		double gotoYmmsim = amountstri.substring(amountstri.indexOf('$') + 1, amountstri.length()).toFloat();
+		Serial.println("gotoXmmsim");
+		Serial.println(gotoXmmsim);
+		Serial.println("gotoYmmsim");
+		Serial.println(gotoYmmsim);
+		simultengoxy(gotoXmmsim, gotoYmmsim);
+
+	}
 	else if (command.equals("MSS"))
 	{
 		//double maxscansizeXmm = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
@@ -970,6 +1106,12 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 				maxYscansize = abs(Ymmsizem / calibrationY);
 				firstscanX = Xmmsize;
 				firstscanY = Ymmsize;
+				firstscanXsteps = abs(Xmmsize / calibrationX);
+				firstscanYsteps = abs(Ymmsize / calibrationY);
+				Serial.println(firstscanX);
+				Serial.println(firstscanY);
+				Serial.println(maxXscansize);
+				Serial.println(maxYscansize);
 				maxscanset = true;
 
 				GotoZero();

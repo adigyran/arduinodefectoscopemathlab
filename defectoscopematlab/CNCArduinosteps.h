@@ -51,6 +51,7 @@ private:
 	 long currentX, currentY; //в шагах
 	 double currentXun, currentYun; // в мм
 	 double firstscanX, firstscanY;
+	 long firstscanXsteps, firstscanYsteps;
 	 long testingstepsX, testingfreqX;
 	 bool testingenableX,scanxbackwards;
 	 byte testingdirX;
@@ -85,6 +86,8 @@ private:
 	 long StepsX(long stepsXf,long speedXf, byte directx); //steps engine in calibration factor. speed means delay in microseconds, wich mean the frequency
 	 long StepsY(long stepsYf, long speedYf, byte directy);
 	 void calculatecurcorunits(currencoord inputcurcor, currencoordunits &outputcurcorunits);
+	 void returncoordtomatlab();
+	 void simultengoxy(long Xstepssim, long Ystepssim);
 	 void GotoCoord(double Xmm, double Ymm);
 	// void FreqStepsX(long stepsXf, long speedXf);
 	// void FreqStepsY(long stepsYf, long speedYf);

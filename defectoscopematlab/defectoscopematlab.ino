@@ -52,10 +52,10 @@ void setup() {
 	pinMode(3, INPUT);
 	//pinMode(2, INPUT);
 	CNCdefectoscope.init();
-	attachInterrupt(3, yinti, FALLING);
-	attachInterrupt(2, yinti2, FALLING);
-	attachInterrupt(4, xinti, FALLING);
-    attachInterrupt(5, xinti2, FALLING);
+	attachInterrupt(3, yinti, FALLING); //20
+	attachInterrupt(2, yinti2, FALLING); //21
+	attachInterrupt(4, xinti, FALLING); //19
+    attachInterrupt(5, xinti2, FALLING); //18
 	Serial.println(CNCdefectoscope.getcurrencoord().currentXs);
 	//Enablepin = 52;
 	//DirpinX = 46;
