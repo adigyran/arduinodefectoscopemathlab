@@ -443,6 +443,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	long testingyempspeed = 1666;
 	long tempspeedY = 1666; //600 гц нужно
 	long experimentr = 2000;
+	long koef = 0.1;
 	int ogol = 0;
 	//на каждые n/10 увеличение скорости в два раза
 	long speedcoef = stepsYf / 10;
@@ -465,9 +466,14 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.println(((stepsYf - speedcoef) % 16)&1);
 	testingyempspeed = testingyempspeed / 1.5;
 	Serial.println(testingyempspeed);
+	long sboost;
 	if (stepsYf > 100)
 	{
-		long sboost = stepsYf / 100;
+		sboost = stepsYf / 10;
+	}
+	else
+	{
+		sboost = 4;
 	}
 	long iy = 0;
 	//long j = 0;
@@ -490,15 +496,19 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//	experimentr = experimentr/2;
 		//	}
 			
-			if (ogol == 10 && experimentr>=600)
+			//if (ogol == 10 && experimentr>=600)
+			//{
+				//experimentr = experimentr -30;
+				//ogol = 0;
+			//}
+			
+			if (iy <= sboost && experimentr>=333)
 			{
-				experimentr = experimentr -30;
-				ogol = 0;
+				experimentr = 1666 - (koef*iy);
 			}
-			
-			
-				StepY(experimentr);
-				ogol++;
+			//Serial.println(experimentr);
+			StepY(experimentr);
+				//ogol++;
 				//Serial.println(experimentr);
 				//delayMicroseconds(experimentr);
 
