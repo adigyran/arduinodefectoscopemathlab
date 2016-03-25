@@ -510,6 +510,8 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//	maxspeed = experimentr;
 				//Serial.println(experimentr);
 			//}
+
+			//1600*x^2+0.01x+334
 			
 			//if (iy > (stepsYf - sboost))
 			//{
