@@ -440,7 +440,23 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	}
 	//Xinterptconc = false;
 	long tempspeedYf = speedYf*1000;
+	long testingyempspeed = 1666;
 	long tempspeedY = 1666; //600 гц нужно
+	//на каждые n/10 увеличение скорости в два раза
+	long speedcoef = stepsYf / 10;
+	Serial.println(speedcoef);
+	Serial.println((stepsYf - speedcoef) % 2);
+	testingyempspeed = testingyempspeed / 1.5;
+	Serial.println(testingyempspeed);
+	Serial.println((stepsYf - speedcoef) % 4);
+	testingyempspeed = testingyempspeed / 1.5;
+	Serial.println(testingyempspeed);
+	Serial.println((stepsYf - speedcoef) % 8);
+	testingyempspeed = testingyempspeed / 1.5;
+	Serial.println(testingyempspeed);
+	Serial.println((stepsYf - speedcoef) % 16);
+	testingyempspeed = testingyempspeed / 1.5;
+	Serial.println(testingyempspeed);
 	long iy = 0;
 	//long j = 0;
 	for (iy;iy < stepsYf; iy++)
@@ -473,18 +489,18 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 
 				tempspeedY = 555;
 			}
-			//if (timer == 800)
-			//{
+			if (timer == 500)
+			{
 
 
-				//tempspeedY = 416;
-		//	}
-			//if (timer == 500)
-			//{
+				tempspeedY = 416;
+			}
+			if (timer == 800)
+			{
 
 
-				//tempspeedY = 333;
-		//	}
+				tempspeedY = 333;
+			}
 
 				StepY(tempspeedY);
 
