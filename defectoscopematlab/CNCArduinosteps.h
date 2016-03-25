@@ -87,7 +87,7 @@ private:
 	 long StepsY(long stepsYf, long speedYf, byte directy);
 	 void calculatecurcorunits(currencoord inputcurcor, currencoordunits &outputcurcorunits);
 	 void returncoordtomatlab();
-	 currencoord simultengoxy(long Xstepssim, long Ystepssim);
+	 currencoord simultengoxy(long Xstepssim, long Ystepssim,long SpeedX,long SpeedY);
 	 void GotoCoord(double Xmm, double Ymm);
 	// void FreqStepsX(long stepsXf, long speedXf);
 	// void FreqStepsY(long stepsYf, long speedYf);

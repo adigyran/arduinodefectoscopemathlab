@@ -157,7 +157,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	GotoZero();
 	delay(1000);
 	long clbtr = 0;
-
+	currencoord calibg;
 	//long maxcalib = maxcalibr;
 	if (maxcalibr < 2)
 	{
@@ -166,68 +166,113 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	
 	Serial.println(xsize);
 	Serial.println(ysize);
-	long totalstepsclbx = 0;
-	maxX = 0;
-	for (clbtr = 0;clbtr < maxcalibr;clbtr++)
-	{
-		if (DirX == 1)
-		{
-			DirX = 0;
-		}
-		else if (DirX == 0)
-		{
-			DirX = 1;
-		}
-		Serial.println(DirX);
-		digitalWrite(DirpinX, DirX);
-		
+	if (!simulcalibr) {
+		long totalstepsclbx = 0;
 		maxX = 0;
-	 long totalxsteps =StepsX(100000, 1000,DirX);
-		totalstepsclbx = totalxsteps + totalstepsclbx;
-		Serial.println(totalstepsclbx);
-		Serial.println(maxX);
-		delay(1000);
-	}
-	GotoZero();
-	delay(1000);
-	 clbtr = 0;
-	 Serial.print("X-");
-	 Serial.println(totalstepsclbx);
-	long totalstepsclby = 0;
-	maxY = 0;
-	for (clbtr = 0;clbtr < maxcalibr;clbtr++)
-	{
-		if (DirY == 1)
+		for (clbtr = 0;clbtr < maxcalibr;clbtr++)
 		{
-			DirY = 0;
-		}
-		else if (DirY == 0)
-		{
-			DirY = 1;
-		}
-		Serial.println(DirY);
-		digitalWrite(DirpinY, DirY);
+			if (DirX == 1)
+			{
+				DirX = 0;
+			}
+			else if (DirX == 0)
+			{
+				DirX = 1;
+			}
+			Serial.println(DirX);
+			digitalWrite(DirpinX, DirX);
 
-		maxY = 0;
-	long totalysteps = StepsY(100000, 1000,DirY);
-		totalstepsclby = totalysteps + totalstepsclby;
-		Serial.println(totalstepsclby);
-		Serial.println(maxY);
+			maxX = 0;
+			long totalxsteps = StepsX(100000, 1000, DirX);
+			totalstepsclbx = totalxsteps + totalstepsclbx;
+			Serial.println(totalstepsclbx);
+			Serial.println(maxX);
+			delay(1000);
+		}
+		GotoZero();
 		delay(1000);
+		clbtr = 0;
+		Serial.print("X-");
+		Serial.println(totalstepsclbx);
+		long totalstepsclby = 0;
+		maxY = 0;
+		for (clbtr = 0;clbtr < maxcalibr;clbtr++)
+		{
+			if (DirY == 1)
+			{
+				DirY = 0;
+			}
+			else if (DirY == 0)
+			{
+				DirY = 1;
+			}
+			Serial.println(DirY);
+			digitalWrite(DirpinY, DirY);
+
+			maxY = 0;
+			long totalysteps = StepsY(100000, 1000, DirY);
+			totalstepsclby = totalysteps + totalstepsclby;
+			Serial.println(totalstepsclby);
+			Serial.println(maxY);
+			delay(1000);
+		}
+
+		Serial.print("Y-");
+		Serial.println(totalstepsclby);
+		Serial.println(maxX);
+		totalstepsclbx = totalstepsclbx / clbtr;
+		maxX = totalstepsclbx;
+		totalstepsclby = totalstepsclby / clbtr;
+		maxY = totalstepsclby;
+		calibg.currentXs = totalstepsclbx;
+		calibg.currentYs = totalstepsclby;
 	}
-	
-	Serial.print("Y-");
-	Serial.println(totalstepsclby);
-	Serial.println(maxX);
-	totalstepsclbx = totalstepsclbx / clbtr;
-	maxX = totalstepsclbx;
-	totalstepsclby = totalstepsclby / clbtr;
-	maxY = totalstepsclby;
-	Serial.println(totalstepsclbx);
+	else
+	{
+		long totalstepsclbx = 0;
+		long totalstepsclby = 0;
+
+		maxX = 0;
+		maxY = 0;
+		for (clbtr = 0;clbtr < maxcalibr;clbtr++)
+		{
+			if (DirX == 1)
+			{
+				DirX = 0;
+			}
+			else if (DirX == 0)
+			{
+				DirX = 1;
+			}
+			if (DirY == 1)
+			{
+				DirY = 0;
+			}
+			else if (DirY == 0)
+			{
+				DirY = 1;
+			}
+			//Serial.println(DirX);
+			digitalWrite(DirpinX, DirX);
+			digitalWrite(DirpinY, DirY);
+
+			maxX = 0;
+			maxY = 0;
+			//long totalxsteps = StepsX(100000, 1000, DirX);
+			calibg = simultengoxy(100000, 100000);
+			//totalstepsclbx = totalxsteps + totalstepsclbx;
+			//Serial.println(totalstepsclbx);
+			//Serial.println(maxX);
+			delay(1000);
+		}
+		GotoZero();
+	}
+	Serial.println(calibg.currentXs);
 	Serial.println("ss");
-	Serial.println(totalstepsclby);
-	double tempclx = (double)xsize / (double)totalstepsclbx;
-	double tempcly = (double)ysize / (double)totalstepsclby;
+	Serial.println(calibg.currentYs);
+
+	double tempclx = (double)xsize / (double)calibg.currentXs;
+	double tempcly = (double)ysize / (double)calibg.currentYs;
 	//calibrationX = 
 	//calibrationY = (double)ysize / (double)totalstepsclby;
 	calibset = true;
@@ -441,7 +486,7 @@ void CNCArduinostepsClass::returncoordtomatlab()
 
 
 }
-CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim)
+CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xstepssim, long Ystepssim, long SpeedX, long SpeedY)
 {
 	long maxsteps = 0;
 	long minsteps = 0;
@@ -504,40 +549,40 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
-			StepX(1000);
+			StepX(SpeedX);
 			donestepsx++;
 		}
-		else {delayMicroseconds(1000);
+		else {delayMicroseconds(SpeedX);
 	}
 		
 		if (i <= maxsteps && maxy &&((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
-			StepY(1000);
+			StepY(SpeedY);
 			donestepsy++;
 		}
 		else {
-			delayMicroseconds(1000);
+			delayMicroseconds(SpeedY);
 		}
 		
 		if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 		{
 			//StepsX(1, 1, 0);
-			StepX(1000);
+			StepX(SpeedX);
 			donestepsx++;
 		}
 		else {
-			delayMicroseconds(1000);
+			delayMicroseconds(SpeedX);
 		}
 		
 		if (i <= minsteps && maxx &&((digitalRead(20) == HIGH && DirY ==1) || (digitalRead(21) == HIGH && DirY == 0)))
 		{
 			//StepsY(1, 1, 0);
-			StepY(1000);
+			StepY(SpeedY);
 			donestepsy++;
 		}
 		else {
-			delayMicroseconds(1000);
+			delayMicroseconds(SpeedY);
 		}
 
 		if (((Xinterptconc && (DirX == 1)) || (Xinterptconc2 && (DirX == 0))) && ((Yinterptconc && DirY == 0) || (Yinterptconc2 && DirY == 1)))
