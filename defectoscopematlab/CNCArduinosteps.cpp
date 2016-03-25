@@ -430,6 +430,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 {
 	Serial.print("ffggtr - ");
 	Serial.println(stepsYf);
+	elapsedMillis timer =0;
 	//Serial.println(dirY);
 	if (DirY == 0 ) {
 		Yinterptconc = false;
@@ -439,7 +440,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	}
 	//Xinterptconc = false;
 	long tempspeedYf = speedYf*1000;
-	long tempspeedY = speedYf * 10;
+	long tempspeedY = 1666; //600 гц нужно
 	long iy = 0;
 	//long j = 0;
 	for (iy;iy < stepsYf; iy++)
@@ -454,11 +455,39 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//	StepY(tempspeedYf);
 			//	}
 			//else {
+			if (timer == 1000)
+			{
+				
+				
+				tempspeedY = 1250;
+			}
+			if (timer == 2000)
+			{
+
+
+				tempspeedY = 833;
+			}
+			if (timer == 3000)
+			{
+
+
+				tempspeedY = 555;
+			}
+			if (timer == 4000)
+			{
+
+
+				tempspeedY = 416;
+			}
+
 				StepY(tempspeedY);
-				if (tempspeedY >= speedYf)
-				{
-					tempspeedY - 50;
-				}
+
+
+			//	Serial.println(tempspeedY);
+			//	if (tempspeedY >= speedYf)
+				//{
+				//	tempspeedY - 1000;
+				//}
 		//	}
 			
 			//	if(!Xinterptconc)
@@ -479,6 +508,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		else break;
 	}
 	Serial.println(iy);
+	timer = 0;
 	maxY = iy;
 	//Serial.println(j);
 	return iy;
