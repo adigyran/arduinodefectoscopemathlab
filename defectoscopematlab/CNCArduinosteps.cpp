@@ -399,7 +399,13 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	long tempspeedX = speedXf * 10;
 	Serial.println("Dir");
 	Serial.println(DirX);
-	long ix = 0;
+	long ix = 1;
+	double  sincoef = stepsXf / 2;
+	double speedHZX = 2000 * abs(sin((PI / 2)*(1 / sincoef)));
+	Serial.println(speedHZX);
+	double speedMksX = floor(1000000 / speedHZX);
+	Serial.println(speedMksX);
+	long speedmkslonY = (long)speedMksX;
 	for (ix;ix < stepsXf; ix++)
 	{
 		if ((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0)))
@@ -411,11 +417,16 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 			//Serial.print("x");
 			//Serial.println(i);
 			
-			StepX(tempspeedX);
-			if (tempspeedX >= speedXf)
-			{
-				tempspeedX - 50;
-			}
+			speedHZX = 2000 * abs(sin(1.57*(ix / sincoef)));
+			//Serial.println(iy / sincoef);
+			//Serial.println(PI / 2);
+			//Serial.println(iy);
+			//Serial.println(stepsYf);
+			//Serial.println(speedHZY);
+			speedMksX = floor(1000000 / speedHZX);
+			//	Serial.println((long)speedMksY);
+			//speedmkslonY = (long)speedMksY;
+			StepX((long)speedMksX);
 			//delayMicroseconds(1000);
 			//pulseXelapsed = 0;
 			//}
@@ -545,15 +556,15 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//maxspeed = (1600 * (pow(testingcoef,2))) + (0.01*testingcoef) + 334;
 				//maxspeed = sin(testingcoef)*1660;
 				speedHZY = 2000 * abs(sin(1.57*(iy / sincoef)));
-				Serial.println(iy / sincoef);
+				//Serial.println(iy / sincoef);
 				//Serial.println(PI / 2);
-				Serial.println(iy);
-				Serial.println(stepsYf);
-				Serial.println(speedHZY);
+				//Serial.println(iy);
+				//Serial.println(stepsYf);
+				//Serial.println(speedHZY);
 				speedMksY = floor(1000000 / speedHZY);
-				Serial.println(speedMksY);
-				speedmkslonY = (long)speedMksY;
-			StepY(speedYf);
+			//	Serial.println((long)speedMksY);
+				//speedmkslonY = (long)speedMksY;
+			StepY((long)speedMksY);
 				//ogol++;
 				//Serial.println(experimentr);
 				//delayMicroseconds(experimentr);
