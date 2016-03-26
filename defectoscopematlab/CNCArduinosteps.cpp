@@ -439,36 +439,43 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		Yinterptconc2 = false;
 	}
 	//Xinterptconc = false;
-	long tempspeedYf = speedYf*1000;
-	long testingyempspeed = 1666;
-	long tempspeedY = 1666; //600 гц нужно
-	long experimentr = 2000;
-	long koef = 3;
-	int ogol = 0;
+	//long tempspeedYf = speedYf*1000;
+	//long testingyempspeed = 1666;
+	//long tempspeedY = 1666; //600 гц нужно
+	//long experimentr = 2000;
+	//long koef = 3;
+//	int ogol = 0;
 	//на каждые n/10 увеличение скорости в два раза
-	long speedcoef = stepsYf / 10;
-	Serial.println(speedcoef);
-	Serial.println((stepsYf - speedcoef) % 2);
-	Serial.println(((stepsYf-1) - speedcoef) % 2);
-	Serial.println(((stepsYf -2) - speedcoef) % 2);
-	Serial.println(stepsYf % 10);
-	Serial.println((stepsYf - 1)% 10);
-	Serial.println((stepsYf - 2)%10);
-	testingyempspeed = testingyempspeed / 1.5;
-	Serial.println(testingyempspeed);
-	Serial.println((stepsYf - speedcoef) % 4);
-	testingyempspeed = testingyempspeed / 1.5;
-	Serial.println(testingyempspeed);
-	Serial.println((stepsYf - speedcoef) % 8);
-	testingyempspeed = testingyempspeed / 1.5;
-	Serial.println(testingyempspeed);
-	long fofo = 0;
-	double maxspeed = 0;
-	Serial.println((stepsYf - speedcoef) % 16);
-	Serial.println(((stepsYf - speedcoef) % 16)&1);
-	testingyempspeed = testingyempspeed / 1.5;
-	Serial.println(testingyempspeed);
-	double testingcoef = 0;
+	//long speedcoef = stepsYf / 10;
+	//Serial.println(speedcoef);
+	//Serial.println((stepsYf - speedcoef) % 2);
+	//Serial.println(((stepsYf-1) - speedcoef) % 2);
+	//Serial.println(((stepsYf -2) - speedcoef) % 2);
+	//Serial.println(stepsYf % 10);
+	//Serial.println((stepsYf - 1)% 10);
+	//Serial.println((stepsYf - 2)%10);
+	//testingyempspeed = testingyempspeed / 1.5;
+	//Serial.println(testingyempspeed);
+	//Serial.println((stepsYf - speedcoef) % 4);
+	//testingyempspeed = testingyempspeed / 1.5;
+	//Serial.println(testingyempspeed);
+	//sin(PI / 2);
+	//Serial.println((stepsYf - speedcoef) % 8);
+	//testingyempspeed = testingyempspeed / 1.5;
+	//Serial.println(testingyempspeed);
+	//long fofo = 0;
+	
+	//V = 2000 * | Sin[Пи / 2 * (n / (17886 / 2))] |
+	double speedHZY = 2000*abs(sin((PI/2)*(1/(stepsYf/2))));
+	Serial.println(speedHZY);
+	double speedMksY = floor(1000000/speedHZY);
+	Serial.println(speedMksY);
+	long speedmkslonY = (long)speedMksY;
+ 		//Serial.println((stepsYf - speedcoef) % 16);
+	//Serial.println(((stepsYf - speedcoef) % 16)&1);
+	//testingyempspeed = testingyempspeed / 1.5;
+	//Serial.println(testingyempspeed);
+	//double testingcoef = 0;
 	long sboost;
 	if (stepsYf > 100)
 	{
@@ -478,9 +485,9 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	{
 		sboost = 4;
 	}
-	long iy = 0;
+	long iy = 1;
 	//long j = 0;
-	for (iy;iy < stepsYf; iy++)
+	for (iy;iy < stepsYf+1; iy++)
 	{
 		if ((!Yinterptconc && DirY ==0)|| (!Yinterptconc2 && DirY == 1)) {
 			//if (pulseXelapsed > 100000) {
@@ -506,7 +513,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//}
 			
 			
-				testingcoef = testingcoef + 0.02;
+			//	testingcoef = testingcoef + 0.02;
 			
 			
 			//if (iy == (stepsYf / 2))
@@ -535,8 +542,13 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		//	}
 			//Serial.println(experimentr);
 			//maxspeed = (1600 * (pow(testingcoef,2))) + (0.01*testingcoef) + 334;
-				maxspeed = sin(testingcoef)*1660;
-			StepY((long)maxspeed);
+				//maxspeed = sin(testingcoef)*1660;
+				speedHZY = 2000 * abs(sin((PI / 2)*(iy / (stepsYf / 2))));
+				Serial.println(speedHZY);
+				speedMksY = floor(1000000 / speedHZY);
+				Serial.println(speedMksY);
+				speedmkslonY = (long)speedMksY;
+			StepY(speedmkslonY);
 				//ogol++;
 				//Serial.println(experimentr);
 				//delayMicroseconds(experimentr);
@@ -568,7 +580,8 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		else break;
 	}
 	Serial.println("speed");
-	Serial.println(experimentr);
+	Serial.println(speedmkslonY);
+	//Serial.println(experimentr);
 	Serial.println(iy);
 	timer = 0;
 	maxY = iy;
