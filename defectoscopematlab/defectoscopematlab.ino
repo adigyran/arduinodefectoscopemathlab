@@ -68,6 +68,7 @@ void setup() {
 void yinti2()
 {
 	CNCdefectoscope.Yinterpt(false); //в нуле
+	
 	Serial.println("Yconv");
 }
 void yinti()

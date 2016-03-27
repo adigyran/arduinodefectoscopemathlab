@@ -78,6 +78,7 @@ void CNCArduinostepsClass::StepX(long speedX)
 	//}
 	//digitalWrite(Xpin,HIGH);
 	PORTB = B01000000;
+	
 
 }
 void CNCArduinostepsClass::StepY(long speedY)
@@ -286,6 +287,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	Serial.println(tempcly, 6);
 	zeroset = false;
 	GotoZero();
+	Serial.println("CLBTD");
 	//setdxdy(100, 100);
 }
 
@@ -400,7 +402,7 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 	Serial.println("Dir");
 	Serial.println(DirX);
 	long ix = 1;
-	double  sincoef = stepsXf / 2;
+	double  sincoef =stepsXf / 2;
 	double speedHZX = 2000 * abs(sin((PI / 2)*(1 / sincoef)));
 	Serial.println(speedHZX);
 	double speedMksX = floor(1000000 / speedHZX);
@@ -1097,6 +1099,7 @@ void CNCArduinostepsClass::setcalibration(double calibX, double calibY)
 	Serial.println(calibrationY);
 	calibset = true;
 }
+
 
 void CNCArduinostepsClass::serialhandler(String command,long amount, String amountstri)
 {
