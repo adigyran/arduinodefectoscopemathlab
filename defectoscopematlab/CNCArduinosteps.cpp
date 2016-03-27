@@ -153,6 +153,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 886;
+	Serial.println(pinsset);
 	//Serial.println(xsize);
 	//Serial.println(ysize);
 	GotoZero();
