@@ -996,11 +996,11 @@ void CNCArduinostepsClass::GotoZero()
 		Serial.println(digitalRead(18));
 		if (digitalRead(18) == HIGH)
 		{
-		long totalxsteps = StepsX(1000000, 1000,1);
+		long totalxsteps = StepsX(70000, 1000,1);
 		}
 		if (digitalRead(21) == HIGH)
 		{
-		long totalysteps = StepsY(1000000, 1000,0);
+		long totalysteps = StepsY(40000, 1000,0);
 		}
 		newcurcord.currentXs = 0;
 		newcurcord.currentYs = 0;
@@ -1357,6 +1357,7 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 				maxscanset = true;
 
 				GotoZero();
+				Serial.println("SCZS");
 				//GotoCoord(Xmmsize, Ymmsize);
 			}
 		}
