@@ -197,6 +197,7 @@ void serialEvent()
 		String casestring = irr.substring(1, 4);
 		Serial.println(casestring);
 		Serial.println(lof);
+		//Serial.println(CNCdefectoscope.getcurrencoord().currentXs);
 		CNCdefectoscope.serialhandler(casestring, lof.toInt(),lof);
 		if (casestring.equals("X1"))
 		{
