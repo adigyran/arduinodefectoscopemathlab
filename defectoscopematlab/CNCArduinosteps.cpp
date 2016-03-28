@@ -464,6 +464,9 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	Serial.println(testingyempspeed);
 	long fofo = 0;
 	double maxspeed = 0;
+	double lastmaxspeed = 0;
+	long gradpersteps = stepsYf / 180;
+	Serial.println(gradpersteps);
 	Serial.println((stepsYf - speedcoef) % 16);
 	Serial.println(((stepsYf - speedcoef) % 16)&1);
 	testingyempspeed = testingyempspeed / 1.5;
@@ -506,7 +509,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 			//}
 			
 			
-				testingcoef = testingcoef + 0.02;
+				//testingcoef = testingcoef + (iy/100);
 			
 			
 			//if (iy == (stepsYf / 2))
@@ -535,8 +538,9 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		//	}
 			//Serial.println(experimentr);
 			//maxspeed = (1600 * (pow(testingcoef,2))) + (0.01*testingcoef) + 334;
-				maxspeed = sin(testingcoef)*1660;
-			StepY((long)maxspeed);
+			lastmaxspeed = maxspeed;
+			maxspeed = lastmaxspeed - ((2 * lastmaxspeed) / ((4 * iy)+1));
+			StepY(((long)1000000/maxspeed));
 				//ogol++;
 				//Serial.println(experimentr);
 				//delayMicroseconds(experimentr);
