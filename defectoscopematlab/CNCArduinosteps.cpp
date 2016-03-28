@@ -319,7 +319,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 	Serial.println(dxdyset);
 	Serial.println(maxscanset);
 	Serial.println(calibset);
-	returncoordtomatlab();
+	//returncoordtomatlab(false,false);
 	bool going = false;
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
@@ -341,7 +341,7 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 			//Serial.print("fgfg - ");
 			//Serial.println(newcurcordunits.currentXunits - dxX);
 			//Serial.print("SCor"); // scancoordinates for mathlab
-			returncoordtomatlab();
+			returncoordtomatlab(false,false);
 			//Serial.print(newcurcordunits.currentXunits+'$'+ newcurcordunits.currentYunits + '\n');
 			scanxbackwards = false;
 			//Serial.print(newcurcordunits.currentYunits+'\n');
@@ -352,27 +352,27 @@ void CNCArduinostepsClass::Scan(bool firststepgo)
 			{
 				
 				GotoCoord(newcurcordunits.currentXunits + dxXun, newcurcordunits.currentYunits);
-				returncoordtomatlab();
+				returncoordtomatlab(false,false);
 				going = true;
 			}
 			else if (newcurcord.currentXs + dxX > maxXscansize && newcurcord.currentYs + dxY <= maxYscansize && !scanxbackwards &&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits+dxYun);
-				returncoordtomatlab();
+				returncoordtomatlab(false,false);
 				scanxbackwards = true;
 				going = true;
 			}
 			else if (newcurcord.currentXs-dxX>=firstscanXsteps && scanxbackwards&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits-dxXun, newcurcordunits.currentYunits);
-				returncoordtomatlab();
+				returncoordtomatlab(false,false);
 				going = true;
 				
 			}
 			else if (newcurcord.currentXs - dxX < firstscanXsteps && scanxbackwards && newcurcord.currentYs + dxY <= maxYscansize&&!going)
 			{
 				GotoCoord(newcurcordunits.currentXunits, newcurcordunits.currentYunits + dxYun);
-				returncoordtomatlab();
+				returncoordtomatlab(false,false);
 				going = true;
 				scanxbackwards = false;
 				
@@ -588,7 +588,7 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 	}
 	else { calibrate(2,false); }
 }
-void CNCArduinostepsClass::returncoordtomatlab()
+void CNCArduinostepsClass::returncoordtomatlab(bool firstpoint, bool endpoint)
 {
 	Serial.print("SCor"); // scancoordinates for mathlab
 	Serial.print(newcurcordunits.currentXunits);
