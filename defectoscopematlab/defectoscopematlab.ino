@@ -68,22 +68,22 @@ void setup() {
 void yinti2()
 {
 	CNCdefectoscope.Yinterpt(false); //в нуле
-	Serial.println("Yconv");
+	//Serial.println("Yconv");
 }
 void yinti()
 {
 	CNCdefectoscope.Yinterpt(true); // на максимуме
-	Serial.println("Yconv2");
+	//Serial.println("Yconv2");
 }
 void xinti2()
 {
 	CNCdefectoscope.Xinterpt(false); //в нуле
-	Serial.println("Xconv");
+	//Serial.println("Xconv");
 }
 void xinti()
 {
 	CNCdefectoscope.Xinterpt(true); //на максимуме
-	Serial.println("Xconv2");
+	//Serial.println("Xconv2");
 }
 
 void blink12()

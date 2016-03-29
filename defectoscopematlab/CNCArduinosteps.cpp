@@ -130,8 +130,8 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand) // установка 
 	//Serial.println(calibrationYtemp);
 	double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
 	//Serial.println(dxXtemp);
-	//double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
-	Serial.println(dxYtemp);
+	double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
+	//Serial.println(dxYtemp);
 	//double calibrationXtemp = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
 	///Serial.println(amountstri.substring(0, amountstri.indexOf('$')));
 	//double calibrationYtemp = amountstri.substring(amountstri.indexOf('$')+1, amountstri.indexOf('&')).toFloat();
@@ -296,14 +296,14 @@ void CNCArduinostepsClass::ArrivedX()
 {
 	Serial.println(timer1stepsinter);
 	Xarrived = true;
-	Serial.println("arivdX");
+	//Serial.println("arivdX");
 }
 
 void CNCArduinostepsClass::ArrivedY()
 {
 	Serial.println(timer3stepsinter);
 	Yarrived = true;
-	Serial.println("arivdY");
+	//Serial.println("arivdY");
 }
 
 //void CNCArduinostepsClass::Yintert()
@@ -401,14 +401,14 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 
 	}
 	long tempspeedX = speedXf * 10;
-	Serial.println("Dir");
-	Serial.println(DirX);
+	//Serial.println("Dir");
+	//Serial.println(DirX);
 	long ix = 1;
 	double  sincoef =stepsXf / 2;
 	double speedHZX = 2000 * abs(sin((PI / 2)*(1 / sincoef)));
-	Serial.println(speedHZX);
+	//Serial.println(speedHZX);
 	double speedMksX = floor(1000000 / speedHZX);
-	Serial.println(speedMksX);
+	//Serial.println(speedMksX);
 	long speedmkslonY = (long)speedMksX;
 	for (ix;ix < stepsXf; ix++)
 	{
@@ -437,14 +437,14 @@ long CNCArduinostepsClass::StepsX(long stepsXf, long speedXf,byte directx)
 		}
 		else break;
 	}
-	Serial.println(ix);
+	//Serial.println(ix);
 	return ix;
 	maxX = ix;
 }
 long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 {
 	Serial.print("ffggtr - ");
-	Serial.println(stepsYf);
+	//Serial.println(stepsYf);
 	elapsedMillis timer =0;
 	//Serial.println(dirY);
 	if (DirY == 0 ) {
@@ -483,9 +483,9 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	//V = 2000 * | Sin[Пи / 2 * (n / (17886 / 2))] |
 	double  sincoef = stepsYf / 2;
 	double speedHZY = 2000*abs(sin((PI/2)*(1/sincoef))+100);
-	Serial.println(speedHZY);
+	//Serial.println(speedHZY);
 	double speedMksY = floor(1000000/speedHZY);
-	Serial.println(speedMksY);
+	//Serial.println(speedMksY);
 	long speedmkslonY = (long)speedMksY;
  		//Serial.println((stepsYf - speedcoef) % 16);
 	//Serial.println(((stepsYf - speedcoef) % 16)&1);
@@ -599,10 +599,10 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 		}
 		else break;
 	}
-	Serial.println("speed");
-	Serial.println(speedmkslonY);
+	//Serial.println("speed");
+	//Serial.println(speedmkslonY);
 	//Serial.println(experimentr);
-	Serial.println(iy);
+	//Serial.println(iy);
 	timer = 0;
 	maxY = iy;
 	//Serial.println(j);
@@ -645,8 +645,8 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		SpeedY = 1000;
 	}
 	currencoord outputtemp;
-	Serial.println(Xstepssim);
-	Serial.println(Ystepssim);
+	//Serial.println(Xstepssim);
+	//Serial.println(Ystepssim);
 	if (DirX == 0) {
 		Xinterptconc = false;
 	}
@@ -681,14 +681,14 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		maxsteps = Ystepssim;
 		minsteps = Ystepssim;
 	}
-	Serial.println(maxsteps);
-	Serial.println(minsteps);
-	Serial.println(maxx);
-	Serial.println(maxy);
-	Serial.println(digitalRead(19));
-	Serial.println(digitalRead(18));
-	Serial.println(DirX);
-	Serial.println(DirY);
+	//Serial.println(maxsteps);
+	//Serial.println(minsteps);
+	//Serial.println(maxx);
+	//Serial.println(maxy);
+	//Serial.println(digitalRead(19));
+	//Serial.println(digitalRead(18));
+	//Serial.println(DirX);
+	//Serial.println(DirY);
 	for (long i = 0;i < maxsteps;i++) {
 		//for (long j = 0; j < minsteps; j++)
 		//{
@@ -741,10 +741,10 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		
 		
 	}
-	Serial.print("donestepsx - ");
-	Serial.println(donestepsx);
-	Serial.print("donestepsy - ");
-	Serial.println(donestepsy);
+	//Serial.print("donestepsx - ");
+	//Serial.println(donestepsx);
+	//Serial.print("donestepsy - ");
+	//Serial.println(donestepsy);
 	maxX = donestepsx;
 	maxY = donestepsy;
 	outputtemp.currentXs = donestepsx;
@@ -781,29 +781,29 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			long neededstepsY1 = 0;
 			long neededstepsX2 = 0;
 			long neededstepsY2 = 0;
-			Serial.print("Xmm2 - ");
-			Serial.println(Xmm);
+			//Serial.print("Xmm2 - ");
+			//Serial.println(Xmm);
 			Serial.print("Ymm2 - ");
-			Serial.println(Ymm);
-			Serial.print("CurrentXsteps - ");
-			Serial.println(newcurcord.currentXs);
-			Serial.print("CurrentYsteps - ");
-			Serial.println(newcurcord.currentYs);
-			Serial.print("Xsteps2 - ");
-			Serial.println(coordXsteps);
-			Serial.print("Ysteps2 - ");
-			Serial.println(coordYsteps);
-			Serial.println("ffre");
-			Serial.println(maxX);
-			Serial.println(maxY);
-			Serial.println("Fff");
-			Serial.println(coordXsteps - newcurcord.currentXs);
-			Serial.println(coordYsteps - newcurcord.currentYs);
+			//Serial.println(Ymm);
+			//Serial.print("CurrentXsteps - ");
+			//Serial.println(newcurcord.currentXs);
+			//Serial.print("CurrentYsteps - ");
+			//Serial.println(newcurcord.currentYs);
+			//Serial.print("Xsteps2 - ");
+			//Serial.println(coordXsteps);
+			//Serial.print("Ysteps2 - ");
+			//Serial.println(coordYsteps);
+			//Serial.println("ffre");
+			//Serial.println(maxX);
+			//Serial.println(maxY);
+			//Serial.println("Fff");
+			//Serial.println(coordXsteps - newcurcord.currentXs);
+			//Serial.println(coordYsteps - newcurcord.currentYs);
 			if (Xmm <= xsize && Ymm <= ysize)
 			{
 				if (coordXsteps < newcurcord.currentXs)
 				{
-					Serial.println("neededcoordsx < curcordsx");
+					//Serial.println("neededcoordsx < curcordsx");
 					neededstepsX1 = newcurcord.currentXs-coordXsteps;
 					SetDirX(1);
 					delay(200);
@@ -812,7 +812,7 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				}
 				if (coordXsteps > newcurcord.currentXs)
 				{
-					Serial.println("neededcoordsx > curcordsx");
+					//Serial.println("neededcoordsx > curcordsx");
 					neededstepsX2 = coordXsteps - newcurcord.currentXs;
 					SetDirX(0);
 					delay(200);
@@ -821,29 +821,29 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 				}
 				if (coordYsteps < newcurcord.currentYs)
 				{
-					Serial.println("neededcoordsy < curcordsy");
+					//Serial.println("neededcoordsy < curcordsy");
 					neededstepsY1 = abs(newcurcord.currentYs - coordYsteps);
-					Serial.print("neededstpes - ");
-					Serial.println(neededstepsY1);
+					//Serial.print("neededstpes - ");
+					//Serial.println(neededstepsY1);
 					SetDirY(0);
 					//digitalWrite(DirpinY, LOW);
 					delay(200);
-					Serial.print("rrr - ");
-					Serial.println(neededstepsY1);
+					//Serial.print("rrr - ");
+					//Serial.println(neededstepsY1);
 					long donestepsy = StepsY(neededstepsY1, 1000, 0);
 
 					newcurcord.currentYs = newcurcord.currentYs - donestepsy;
 				}
 				if (coordYsteps > newcurcord.currentYs)
 				{
-					Serial.println("neededcoordsy > curcordsy");
+					//Serial.println("neededcoordsy > curcordsy");
 					neededstepsY2 = coordYsteps - newcurcord.currentYs;
-					Serial.println(neededstepsY2);
+					//Serial.println(neededstepsY2);
 					SetDirY(1);
 					//digitalWrite(DirpinY, HIGH);
 					delay(200);
-					Serial.print("difii ");
-					Serial.println(neededstepsY2);
+					//Serial.print("difii ");
+					//Serial.println(neededstepsY2);
 					long donestepsy = StepsY(neededstepsY2, 1000, 1);
 					newcurcord.currentYs = newcurcord.currentYs + donestepsy;
 				}
@@ -921,10 +921,10 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 					//Serial.println(" mm Y");
 				//}
 				
-				Serial.print("CurrentXsteps2 - ");
-				Serial.println(newcurcord.currentXs);
-				Serial.print("CurrentYsteps2 - ");
-				Serial.println(newcurcord.currentYs);
+				//Serial.print("CurrentXsteps2 - ");
+				//Serial.println(newcurcord.currentXs);
+				//Serial.print("CurrentYsteps2 - ");
+				//Serial.println(newcurcord.currentYs);
 				calculatecurcorunits(newcurcord, newcurcordunits);
 			}
 			else 
@@ -1083,10 +1083,10 @@ void CNCArduinostepsClass::setdxdy(double dxXunits, double dxYunits)
 	{
 		dxX = abs((double)dxXun / calibrationX);
 		dxY = abs((double)dxYun / calibrationY);
-		Serial.println(dxX);
-		Serial.println(dxY);
-		Serial.println(dxXun);
-		Serial.println(dxYun);
+		//Serial.println(dxX);
+		//Serial.println(dxY);
+		//Serial.println(dxXun);
+		//Serial.println(dxYun);
 		dxdyset = true;
 
 
@@ -1097,16 +1097,16 @@ void CNCArduinostepsClass::setcalibration(double calibX, double calibY)
 {
 	calibrationX = calibX;
 	calibrationY = calibY;
-	Serial.println(calibrationX);
-	Serial.println(calibrationY);
+	//Serial.println(calibrationX);
+	//Serial.println(calibrationY);
 	calibset = true;
 }
 
 
 void CNCArduinostepsClass::serialhandler(String command,long amount, String amountstri)
 {
-	Serial.println(command);
-	Serial.println(amount);
+	//Serial.println(command);
+	//Serial.println(amount);
 	if (command.equals("DXX"))
 	{
 		dxX = amount;
@@ -1148,13 +1148,13 @@ void CNCArduinostepsClass::serialhandler(String command,long amount, String amou
 		if (amount == 0)
 		{
 			digitalWrite(Enablepin, HIGH);
-			Serial.println(digitalRead(52));
+			//Serial.println(digitalRead(52));
 
 		}
 		if (amount == 1)
 		{
 			digitalWrite(Enablepin, LOW);
-			Serial.println(digitalRead(52));
+			//Serial.println(digitalRead(52));
 		}
 	}
 	else if (command.equals("TSR"))
