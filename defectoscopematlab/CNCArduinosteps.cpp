@@ -500,6 +500,7 @@ long CNCArduinostepsClass::StepsY(long stepsYf, long speedYf,byte directy)
 	else
 	{
 		sboost = 4;
+		//ап
 	}
 	long iy = 1;
 	//long j = 0;
