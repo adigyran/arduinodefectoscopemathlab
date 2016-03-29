@@ -129,8 +129,8 @@ void CNCArduinostepsClass::serialcalibratedx(String calibrcommand) // установка 
 	//double calibrationYtemp = calibrationtemp.substring(calibrationtemp.indexOf('$') + 1, calibrationtemp.length()).toFloat();
 	//Serial.println(calibrationYtemp);
 	double dxXtemp = dxtemp.substring(0, dxtemp.indexOf('$')).toFloat();
-	Serial.println(dxXtemp);
-	double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
+	//Serial.println(dxXtemp);
+	//double dxYtemp = dxtemp.substring(dxtemp.indexOf('$') + 1, dxtemp.length()).toFloat();
 	Serial.println(dxYtemp);
 	//double calibrationXtemp = amountstri.substring(0, amountstri.indexOf('$')).toFloat();
 	///Serial.println(amountstri.substring(0, amountstri.indexOf('$')));
@@ -153,7 +153,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 886;
-	Serial.println(pinsset);
+	//Serial.println(pinsset);
 	//Serial.println(xsize);
 	//Serial.println(ysize);
 	GotoZero();
@@ -166,8 +166,8 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 		maxcalibr = 2;
 	}
 	
-	Serial.println(xsize);
-	Serial.println(ysize);
+	//Serial.println(xsize);
+	//Serial.println(ysize);
 	if (!simulcalibr) {
 		long totalstepsclbx = 0;
 		maxX = 0;
@@ -181,21 +181,21 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 			{
 				DirX = 1;
 			}
-			Serial.println(DirX);
+			//Serial.println(DirX);
 			digitalWrite(DirpinX, DirX);
 
 			maxX = 0;
 			long totalxsteps = StepsX(70000, 1000, DirX);
 			totalstepsclbx = totalxsteps + totalstepsclbx;
-			Serial.println(totalstepsclbx);
-			Serial.println(maxX);
+			//Serial.println(totalstepsclbx);
+			//Serial.println(maxX);
 			delay(1000);
 		}
 		GotoZero();
 		delay(1000);
 		clbtr = 0;
-		Serial.print("X-");
-		Serial.println(totalstepsclbx);
+		//Serial.print("X-");
+		//Serial.println(totalstepsclbx);
 		long totalstepsclby = 0;
 		maxY = 0;
 		for (clbtr = 0;clbtr < maxcalibr;clbtr++)
@@ -208,20 +208,20 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 			{
 				DirY = 1;
 			}
-			Serial.println(DirY);
+			//Serial.println(DirY);
 			digitalWrite(DirpinY, DirY);
 
 			maxY = 0;
 			long totalysteps = StepsY(40000, 1000, DirY);
 			totalstepsclby = totalysteps + totalstepsclby;
-			Serial.println(totalstepsclby);
-			Serial.println(maxY);
+			//Serial.println(totalstepsclby);
+			//Serial.println(maxY);
 			delay(1000);
 		}
 
-		Serial.print("Y-");
-		Serial.println(totalstepsclby);
-		Serial.println(maxX);
+		//Serial.print("Y-");
+		//Serial.println(totalstepsclby);
+		//Serial.println(maxX);
 		totalstepsclbx = totalstepsclbx / clbtr;
 		maxX = totalstepsclbx;
 		totalstepsclby = totalstepsclby / clbtr;
@@ -273,9 +273,9 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 		calibg.currentYs = calibg.currentYs/clbtr;
 		GotoZero();
 	}
-	Serial.println(calibg.currentXs);
-	Serial.println("ss");
-	Serial.println(calibg.currentYs);
+	//Serial.println(calibg.currentXs);
+	//Serial.println("ss");
+	//Serial.println(calibg.currentYs);
 
 	double tempclx = (double)xsize / (double)calibg.currentXs;
 	double tempcly = (double)ysize / (double)calibg.currentYs;
@@ -284,8 +284,8 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	calibset = true;
 	setcalibration(tempclx, tempcly);
 
-	Serial.println(tempclx,6);
-	Serial.println(tempcly, 6);
+	//Serial.println(tempclx,6);
+	//Serial.println(tempcly, 6);
 	zeroset = false;
 	GotoZero();
 	Serial.println("CLBTD");
@@ -318,29 +318,29 @@ void CNCArduinostepsClass::ArrivedY()
 
 void CNCArduinostepsClass::Scan(bool firststepgo)
 {
-	Serial.println(pinsset);
-	Serial.println(dxdyset);
-	Serial.println(maxscanset);
-	Serial.println(calibset);
+	//Serial.println(pinsset);
+	//Serial.println(dxdyset);
+	//Serial.println(maxscanset);
+	//Serial.println(calibset);
 	//returncoordtomatlab();
 	bool going = false;
 	
 	if (pinsset && dxdyset &&maxscanset && calibset)
 	{
-		Serial.print("gort");
-		Serial.println(newcurcordunits.currentXunits + dxXun);
-		Serial.println(scanxbackwards);
-		Serial.println(newcurcordunits.currentXunits);
-		Serial.println(newcurcordunits.currentYunits);
-		Serial.print("fgfg - ");
-		Serial.println(newcurcordunits.currentXunits - dxXun);
+		//Serial.print("gort");
+		//Serial.println(newcurcordunits.currentXunits + dxXun);
+		//Serial.println(scanxbackwards);
+		//Serial.println(newcurcordunits.currentXunits);
+		//Serial.println(newcurcordunits.currentYunits);
+		//Serial.print("fgfg - ");
+		//Serial.println(newcurcordunits.currentXunits - dxXun);
 		if (firststepgo) {
-			Serial.println(firstscanX);
-			Serial.println(firstscanY);
+		//	Serial.println(firstscanX);
+			//Serial.println(firstscanY);
 			GotoCoord(firstscanX, firstscanY);
 			
-			Serial.println(newcurcordunits.currentXunits);
-			Serial.println(newcurcordunits.currentYunits);
+			//Serial.println(newcurcordunits.currentXunits);
+			//Serial.println(newcurcordunits.currentYunits);
 			//Serial.print("fgfg - ");
 			//Serial.println(newcurcordunits.currentXunits - dxX);
 			//Serial.print("SCor"); // scancoordinates for mathlab
