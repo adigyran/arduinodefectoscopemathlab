@@ -261,7 +261,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 			maxX = 0;
 			maxY = 0;
 			//long totalxsteps = StepsX(100000, 1000, DirX);
-			calibg = simultengoxy(100000, 100000,1000,1000);
+			calibg = simultengoxy(70000, 40000,1000,1000);
 			calibg.currentXs = calibg.currentXs + calibg.currentXs;
 			calibg.currentYs = calibg.currentYs + calibg.currentYs;
 			//totalstepsclbx = totalxsteps + totalstepsclbx;
