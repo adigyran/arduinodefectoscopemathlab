@@ -153,9 +153,11 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 887;
-	long maxcalstepsX = (631 * 80)+80;
+	unsigned long maxcalstepsX = 0;
+	maxcalstepsX = (631 * 80) + 80;
 	Serial.println(maxcalstepsX);
-	long maxcalstepsY = (887 * 40)+80;
+	unsigned long maxcalstepsY = 0;
+	maxcalstepsY = (887 * 40) + 80;
 	Serial.println(maxcalstepsY);
 	//Serial.println(pinsset);
 	//Serial.println(xsize);
