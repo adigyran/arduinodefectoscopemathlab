@@ -34,6 +34,7 @@ void setup() {
 	pinMode(19, INPUT);
 	pinMode(18, INPUT);
 	pinMode(12, OUTPUT);
+	pinMode(10, OUTPUT);
 	enableX = false;
 	enableY = false;
     //Timer1.initialize(205000);
