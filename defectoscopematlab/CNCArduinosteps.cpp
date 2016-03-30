@@ -637,6 +637,12 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 	bool maxx = false;
 	bool donex = false;
 	bool doney = false;
+	double  sincoefX = Xstepssim / 2;
+	double sincoefY = Ystepssim / 2;
+	double speedHZX = 2000 * abs(sin((PI / 2)*(1 / sincoefX))+100);
+	double speedHZY = 2000 * abs(sin((PI / 2)*(1 / sincoefY))+100);
+	double speedMksX = floor(1000000 / speedHZX);
+	double speedMksY = floor(1000000 / speedHZY);
 	if (SpeedX <= 0)
 	{
 		SpeedX = 1000;
@@ -695,46 +701,60 @@ CNCArduinostepsClass::currencoord CNCArduinostepsClass::simultengoxy(long Xsteps
 		//{
 		//	if(j)
 		//}
+		//speedHZX = 2000 * abs(sin(1.57*(ix / sincoef)) + 100);
+		//Serial.println(iy / sincoef);
+		//Serial.println(PI / 2);
+		//Serial.println(iy);
+		//Serial.println(stepsYf);
+		//Serial.println(speedHZY);
+	//	speedMksX = floor(1000000 / speedHZX);
 		if (((!Xinterptconc && (DirX == 1)) || (!Xinterptconc2 && (DirX == 0))) && ((!Yinterptconc && DirY == 0) || (!Yinterptconc2 && DirY == 1)))
 		{
+			speedHZX = 2000 * abs(sin((PI / 2)*(donestepsx / sincoefX)) + 100);
+			speedMksX = floor(1000000 / speedHZX);
+			speedHZY = 2000 * abs(sin((PI / 2)*(donestepsy / sincoefY)) + 100);
+			speedMksY = floor(1000000 / speedHZY);
 			if (i <= maxsteps && maxx && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 			{
+				
 				//StepsX(1, 1, 0);
-				StepX(SpeedX);
+				//StepX(SpeedX);
+				StepX(speedMksX);
 				donestepsx++;
+
 			}
 			else {
-				delayMicroseconds(SpeedX);
+				delayMicroseconds(speedMksX);
 			}
 
 			if (i <= maxsteps && maxy && ((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 			{
 				//StepsY(1, 1, 0);
-				StepY(SpeedY);
+				StepY(speedMksY);
 				donestepsy++;
 			}
 			else {
-				delayMicroseconds(SpeedY);
+				delayMicroseconds(speedMksY);
 			}
 
 			if (i <= minsteps && maxy && ((digitalRead(19) == HIGH && DirX == 0) || (digitalRead(18) == HIGH && DirX == 1)))
 			{
 				//StepsX(1, 1, 0);
-				StepX(SpeedX);
+				StepX(speedMksX);
 				donestepsx++;
 			}
 			else {
-				delayMicroseconds(SpeedX);
+				delayMicroseconds(speedMksX);
 			}
 
 			if (i <= minsteps && maxx && ((digitalRead(20) == HIGH && DirY == 1) || (digitalRead(21) == HIGH && DirY == 0)))
 			{
 				//StepsY(1, 1, 0);
-				StepY(SpeedY);
+				StepY(speedMksY);
 				donestepsy++;
 			}
 			else {
-				delayMicroseconds(SpeedY);
+				delayMicroseconds(speedMksY);
 			}
 
 		}
