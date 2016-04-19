@@ -291,7 +291,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	//calibrationX = 
 	//calibrationY = (double)ysize / (double)totalstepsclby;
 	calibset = true;
-	setcalibration(tempclx, tempcly);
+	setcalibration(0.0125, 0.025);
 
 	Serial.println(tempclx,6);
 	Serial.println(tempcly, 6);
