@@ -153,6 +153,8 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 887;
+	stepspermmX = 80;
+	stepspermmY = 40;
 	Serial.println(xsize * 80);
 	 long maxcalstepsX = 0;
 	maxcalstepsX = xsize * 80;
@@ -678,8 +680,10 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 {
 	if (calibset)
 	{
-		outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
-		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
+		//outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
+		//outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
+		outputcurcorunits.currentXunits = inputcurcor.currentXs/stepspermmX;
+		outputcurcorunits.currentYunits = inputcurcor.currentYs/stepspermmY;
 	}
 	else { calibrate(2,false); }
 }
@@ -861,12 +865,12 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			//calibrationY = 0.024;
 			//xsize = 631;
 		//	ysize = 886;
-			int mmstepsx = 80;
-			int mmstepsy = 40;
+			//int mmstepsx = 80;
+			//int mmstepsy = 40;
 			//long coordXsteps = abs(Xmm / calibrationX); //ошибка округления
 			//long coordYsteps = abs(Ymm / calibrationY); // ошибка округления
-			long coordXsteps = Xmm*mmstepsx;
-			long coordYsteos = Ymm*mmstepsy;
+			long coordXsteps = Xmm*stepspermmX;
+			long coordYsteps = Ymm*stepspermmY;
 			long neededstepsX1 = 0;
 			long neededstepsY1 = 0;
 			long neededstepsX2 = 0;
