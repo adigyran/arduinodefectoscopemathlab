@@ -861,8 +861,12 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			//calibrationY = 0.024;
 			//xsize = 631;
 		//	ysize = 886;
-			long coordXsteps = abs(Xmm / calibrationX);
-			long coordYsteps = abs(Ymm / calibrationY);
+			int mmstepsx = 80;
+			int mmstepsy = 40;
+			//long coordXsteps = abs(Xmm / calibrationX); //ошибка округления
+			//long coordYsteps = abs(Ymm / calibrationY); // ошибка округления
+			long coordXsteps = Xmm*mmstepsx;
+			long coordYsteos = Ymm*mmstepsy;
 			long neededstepsX1 = 0;
 			long neededstepsY1 = 0;
 			long neededstepsX2 = 0;
