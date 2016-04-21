@@ -153,12 +153,14 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 {
 	xsize = 631;
 	ysize = 887;
+	stepspermmX = 80;
+	stepspermmY = 40;
 	Serial.println(xsize * 80);
 	 long maxcalstepsX = 0;
-	maxcalstepsX = xsize * 80;
+	maxcalstepsX = xsize * 80+8000;
 	Serial.println(maxcalstepsX);
 	long maxcalstepsY = 0;
-	maxcalstepsY = ysize * 40;
+	maxcalstepsY = ysize * 40+4000;
 	Serial.println(maxcalstepsY);
 	//Serial.println(pinsset);
 	//Serial.println(xsize);
@@ -291,7 +293,7 @@ void CNCArduinostepsClass::calibrate(long maxcalibr,bool simulcalibr)
 	//calibrationX = 
 	//calibrationY = (double)ysize / (double)totalstepsclby;
 	calibset = true;
-	setcalibration(tempclx, tempcly);
+	setcalibration(0.0125, 0.025);
 
 	Serial.println(tempclx,6);
 	Serial.println(tempcly, 6);
@@ -678,8 +680,10 @@ void CNCArduinostepsClass::calculatecurcorunits(currencoord inputcurcor, currenc
 {
 	if (calibset)
 	{
-		outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
-		outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
+		//outputcurcorunits.currentXunits = inputcurcor.currentXs*calibrationX;
+		//outputcurcorunits.currentYunits = inputcurcor.currentYs*calibrationY;
+		outputcurcorunits.currentXunits = inputcurcor.currentXs/stepspermmX;
+		outputcurcorunits.currentYunits = inputcurcor.currentYs/stepspermmY;
 	}
 	else { calibrate(2,false); }
 }
@@ -861,8 +865,12 @@ void CNCArduinostepsClass::GotoCoord(double Xmm, double Ymm)
 			//calibrationY = 0.024;
 			//xsize = 631;
 		//	ysize = 886;
-			long coordXsteps = abs(Xmm / calibrationX);
-			long coordYsteps = abs(Ymm / calibrationY);
+			//int mmstepsx = 80;
+			//int mmstepsy = 40;
+			//long coordXsteps = abs(Xmm / calibrationX); //ошибка округления
+			//long coordYsteps = abs(Ymm / calibrationY); // ошибка округления
+			long coordXsteps = Xmm*stepspermmX;
+			long coordYsteps = Ymm*stepspermmY;
 			long neededstepsX1 = 0;
 			long neededstepsY1 = 0;
 			long neededstepsX2 = 0;
@@ -1167,8 +1175,10 @@ void CNCArduinostepsClass::setdxdy(double dxXunits, double dxYunits)
 	
 	if (calibset)
 	{
-		dxX = abs((double)dxXun / calibrationX);
-		dxY = abs((double)dxYun / calibrationY);
+		//dxX = abs((double)dxXun / calibrationX);
+		//dxY = abs((double)dxYun / calibrationY);
+		dxX = dxXun*stepspermmX;
+		dxY = dxYun*stepspermmY;
 		//Serial.println(dxX);
 		//Serial.println(dxY);
 		//Serial.println(dxXun);
@@ -1431,12 +1441,16 @@ void CNCArduinostepsClass::setsizeofscan(String sizecommand)
 			//Serial.println(dxXtemp);
 			double Ymmsizem = maxcoordtemp.substring(maxcoordtemp.indexOf('$') + 1, maxcoordtemp.length()).toFloat();
 			if (Xmmsizem < xsize && Ymmsizem < ysize && Xmmsizem < xsize && Ymmsizem < ysize) {
-				maxXscansize = abs(Xmmsizem / calibrationX);
-				maxYscansize = abs(Ymmsizem / calibrationY);
+				//maxXscansize = abs(Xmmsizem / calibrationX);
+				maxXscansize = Xmmsizem*stepspermmX;
+				maxYscansize = Ymmsizem*stepspermmY;
+				//maxYscansize = abs(Ymmsizem / calibrationY);
 				firstscanX = Xmmsize;
 				firstscanY = Ymmsize;
-				firstscanXsteps = abs(Xmmsize / calibrationX);
-				firstscanYsteps = abs(Ymmsize / calibrationY);
+				//firstscanXsteps = abs(Xmmsize / calibrationX);
+				//firstscanYsteps = abs(Ymmsize / calibrationY);
+				firstscanXsteps = Xmmsize*stepspermmX;
+				firstscanYsteps = Ymmsize*stepspermmY;
 				Serial.println(firstscanX);
 				Serial.println(firstscanY);
 				Serial.println(maxXscansize);

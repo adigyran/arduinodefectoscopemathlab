@@ -53,6 +53,7 @@ private:
 	 double firstscanX, firstscanY;
 	 long firstscanXsteps, firstscanYsteps;
 	 long testingstepsX, testingfreqX;
+	 int stepspermmX, stepspermmY;
 	 bool testingenableX,scanxbackwards;
 	 byte testingdirX;
 	 byte testingdirY;
